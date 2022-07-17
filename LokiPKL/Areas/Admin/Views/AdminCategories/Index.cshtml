@@ -1,0 +1,46 @@
+﻿@model IEnumerable<LokiPKL.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    .create{
+        float : right
+    }
+</style>
+<h1>Categories</h1>
+<br />
+<p>
+    <a class="create btn btn-primary" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Brand)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand.BrandName)
+            </td>
+            <td>
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.CategoryId">View</a>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

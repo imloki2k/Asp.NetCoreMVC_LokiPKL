@@ -1,0 +1,36 @@
+﻿@model IEnumerable<LokiPKL.Models.Role>
+
+@{
+	ViewData["Title"] = "Quản lý quyền truy cập";
+	Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Roles</h1>
+<div class="table-responsive">
+	<table class="datatable table table-stripped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@if(Model != null)
+			{
+				@foreach (var o in Model)
+			   {
+				<tr>
+				<td>@o.RoleId</td>
+				<td>@o.RoleName</td>
+				<td>
+					<a class="btn btn-info" asp-area="Admin" asp-controller="AdminRoles" asp-action="Details" asp-route-id="@o.RoleId">View</a>
+					<a class="btn btn-warning" asp-controller="AdminRoles" asp-action="Edit" asp-route-id="@o.RoleId">Edit</a>
+					<a class="btn btn-danger" asp-controller="AdminRoles" asp-action="Delete" asp-route-id="@o.RoleId">Delete</a>
+				</td>
+			    </tr>  
+			   }
+			}
+		</tbody>
+	</table>
+</div>
