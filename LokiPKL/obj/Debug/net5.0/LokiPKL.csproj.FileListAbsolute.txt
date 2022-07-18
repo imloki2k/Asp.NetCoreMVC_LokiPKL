@@ -471,3 +471,4 @@ C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Areas\Admin\Vi
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminOrders\Index.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\LokiPKL.csproj.AssemblyReference.cache
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Shared\_FooterPartialView.cshtml.g.cs
+C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Shared\_HeaderPartialView.cshtml.g.cs
