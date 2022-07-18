@@ -10,31 +10,18 @@
           <div class="row">
             <div class="col-xs-12 col-sm-4">
               <div class="header-top-left">
-                <div class="contact"><span class="hidden-xs hidden-sm hidden-md">Days a week from 9:00 am to 7:00 pm</span></div>
+                <div class="contact"><span class="hidden-xs hidden-sm hidden-md">Days a week from 8:00 am to 7:00 pm</span></div>
               </div>
             </div>
             <div class="col-xs-12 col-sm-8">
               <ul class="header-top-right text-right">
                 <li class="account"><a href="login.html">My Account</a></li>
-                <li class="language dropdown"> <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">Language <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#">English</a></li>
-                    <li><a href="#">French</a></li>
-                    <li><a href="#">German</a></li>
-                  </ul>
-                </li>
-                <li class="currency dropdown"> <span class="dropdown-toggle" id="dropdownMenu12" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">Currency <span class="caret"></span> </span>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu12">
-                    <li><a href="#">€ Euro</a></li>
-                    <li><a href="#">£ Pound Sterling</a></li>
-                    <li><a href="#">$ US Dollar</a></li>
-                  </ul>
-                </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
+
       <div class="header">
         <div class="container">
           <div class="row">
@@ -73,6 +60,7 @@
                     </table>
                   </li>
                   <li>
+
                     <table class="table">
                       <tbody>
                         <tr>
@@ -93,6 +81,7 @@
                         </tr>
                       </tbody>
                     </table>
+
                   </li>
                   <li>
                     <form action="cart_page.html">
@@ -111,7 +100,7 @@
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse"> <span class="i-bar"><i class="fa fa-bars"></i></span></button>
             <div class="collapse navbar-collapse js-navbar-collapse">
               <ul id="menu" class="nav navbar-nav">
-                <li> <a href="index.html">Home</a></li>
+                <li> <a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li class="dropdown mega-dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection </a>
                   <ul class="dropdown-menu mega-dropdown-menu row">
                     <li class="col-md-3">
@@ -150,36 +139,12 @@
                         <li><a href="#">Good Typography</a></li>
                       </ul>
                     </li>
-                    <li class="col-md-3">
-                      <ul>
-                        <li id="myCarousel" class="carousel slide" data-ride="carousel">
-                          <div class="carousel-inner">
-                            <div class="item active"> <a href="#"><img src="~/assets/images/menu-banner1.jpg" class="img-responsive" alt="Banner1"></a></div>
-                            <!-- End Item -->
-                            <div class="item"> <a href="#"><img src="~/assets/images/menu-banner2.jpg" class="img-responsive" alt="Banner1"></a></div>
-                            <!-- End Item -->
-                            <div class="item"> <a href="#"><img src="~/assets/images/menu-banner3.jpg" class="img-responsive" alt="Banner1"></a></div>
-                            <!-- End Item -->
-                          </div>
-                          <!-- End Carousel Inner -->
-                        </li>
-                        <!-- /.carousel -->
-                      </ul>
-                    </li>
                   </ul>
                 </li>
-                <li> <a href="category_page.html">Shop</a></li>
-                <li> <a href="blog_page.html">Blog</a></li>
-                <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages </a>
-                  <ul class="dropdown-menu">
-                    <li> <a href="cart_page.html">Cart</a></li>
-                    <li> <a href="checkout_page.html">Checkout</a></li>
-                    <li> <a href="product_detail_page.html">Product Detail Page</a></li>
-                    <li> <a href="single_blog.html">Single Post</a></li>
-                  </ul>
-                </li>
-                <li> <a href="about.html">About us</a></li>
-                <li> <a href="contact_us.html">Contact us</a></li>
+                <li> <a asp-controller="Product" asp-action="Index">Shop</a></li>
+                <li> <a asp-controller="Blog" asp-action="Index">Blog</a></li>
+                <li> <a asp-controller="Home" asp-action="About">About us</a></li>
+                <li> <a asp-controller="Home" asp-action="Contact">Contact us</a></li>
               </ul>
             </div>
             <!-- /.nav-collapse -->
