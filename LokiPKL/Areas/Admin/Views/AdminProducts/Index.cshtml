@@ -46,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MainImage)
+                <img style="width:100px;height:100px" src="~/Upload/Main_image/@item.MainImage" />
             </td>
             <td>
                 <a class="btn btn-info" asp-action="Details" asp-route-id="@item.ProductId">Details</a>
