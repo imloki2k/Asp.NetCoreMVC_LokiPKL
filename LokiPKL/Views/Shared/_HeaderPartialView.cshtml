@@ -103,42 +103,22 @@
                 <li> <a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li class="dropdown mega-dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection </a>
                   <ul class="dropdown-menu mega-dropdown-menu row">
-                    <li class="col-md-3">
+
+                  @foreach (var item in ViewBag.Brands)
+                 {
+                   <li class="col-md-3">
                       <ul>
-                        <li class="dropdown-header">Women's</li>
-                        <li><a href="#">Unique Features</a></li>
-                        <li><a href="#">Image Responsive</a></li>
-                        <li><a href="#">Auto Carousel</a></li>
-                        <li><a href="#">Newsletter Form</a></li>
-                        <li><a href="#">Four columns</a></li>
-                        <li><a href="#">Four columns</a></li>
-                        <li><a href="#">Good Typography</a></li>
+                        <li class="dropdown-header">@item.BrandName</li>
+                        @foreach (var c in ViewBag.Categories)
+                        {
+                            @if(item.BrandId == c.BrandId){
+                               <li><a href="#">@c.CategoryName</a></li>
+                            }
+                        }
                       </ul>
-                    </li>
-                    <li class="col-md-3">
-                      <ul>
-                        <li class="dropdown-header">Man's</li>
-                        <li><a href="#">Unique Features</a></li>
-                        <li><a href="#">Image Responsive</a></li>
-                        <li><a href="#">Four columns</a></li>
-                        <li><a href="#">Auto Carousel</a></li>
-                        <li><a href="#">Newsletter Form</a></li>
-                        <li><a href="#">Four columns</a></li>
-                        <li><a href="#">Good Typography</a></li>
-                      </ul>
-                    </li>
-                    <li class="col-md-3">
-                      <ul>
-                        <li class="dropdown-header">Children's</li>
-                        <li><a href="#">Unique Features</a></li>
-                        <li><a href="#">Four columns</a></li>
-                        <li><a href="#">Image Responsive</a></li>
-                        <li><a href="#">Auto Carousel</a></li>
-                        <li><a href="#">Newsletter Form</a></li>
-                        <li><a href="#">Four columns</a></li>
-                        <li><a href="#">Good Typography</a></li>
-                      </ul>
-                    </li>
+                    </li>  
+                 }
+                    
                   </ul>
                 </li>
                 <li> <a asp-controller="Product" asp-action="Index">Shop</a></li>

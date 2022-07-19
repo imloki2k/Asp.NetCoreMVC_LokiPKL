@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LokiPKL.Models;
-using System.IO;
-using AspNetCoreHero.ToastNotification.Abstractions;
 using PagedList.Core;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace LokiPKL.Areas.Admin.Controllers
 {
@@ -18,7 +17,6 @@ namespace LokiPKL.Areas.Admin.Controllers
         private readonly Loki_PKLContext _context;
 
         public INotyfService _notifyService { get; }
-
 
         public AdminProductsController(Loki_PKLContext context, INotyfService notifyService)
         {
@@ -73,13 +71,13 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,Price,Quantity,Description,MainImage")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,Price,Quantity,Description,MainImage,HotProduct,FeaturedProduct")] Product product)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                _notifyService.Success("Create new product successful!");
+                _notifyService.Success("Add new Product successful!");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", product.BrandId);
@@ -110,7 +108,7 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,BrandId,CategoryId,Price,Quantity,Description,MainImage")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,BrandId,CategoryId,Price,Quantity,Description,MainImage,HotProduct,FeaturedProduct")] Product product)
         {
             if (id != product.ProductId)
             {
@@ -129,6 +127,7 @@ namespace LokiPKL.Areas.Admin.Controllers
                 {
                     if (!ProductExists(product.ProductId))
                     {
+                        _notifyService.Error("Edit failed!");
                         return NotFound();
                     }
                     else

@@ -1,0 +1,56 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<LokiPKL.Models.Blog>
+
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .create{
+        float : right
+    }
+</style>
+
+
+<h2>Blogs</h2>
+
+<p>
+    <a class="btn btn-primary create" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Blog Content
+            </th>
+            <th>
+                Blog Image
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.BlogContent)
+            </td>
+            <td>
+                <img style="width:100px;height:100px" src="~/Upload/Main_image/@item.BlogImage" />
+            </td>
+            <td>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.BlogId">Edit</a> 
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.BlogId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div aria-label="Page navigation example">
+	<ul class="pagination">
+		<pager class="pager-container" list="@Model" asp-action="Index" asp-controller="AdminBlogs"></pager>
+	</ul>
+</div>

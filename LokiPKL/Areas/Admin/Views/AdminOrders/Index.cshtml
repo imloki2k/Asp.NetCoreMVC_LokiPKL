@@ -3,12 +3,22 @@
 
 @{
     int CurrentPage = ViewBag.CurrentPage;
-    ViewData["Title"] = "Danh sách đơn hàng" + CurrentPage;
+    ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Orders</h1>
+<style>
+    .create{
+        float : right
+    }
+</style>
 
+
+<h2>Orders</h2>
+
+<p>
+    <a class="btn btn-primary create" asp-action="Create">Create New</a>
+</p>
 <table class="table">
     <thead>
         <tr>
@@ -16,16 +26,16 @@
                 OrderDate
             </th>
             <th>
-                Fullname
-            </th>
-            <th>
-               Email
-            </th>
-            <th>
-                NumberPhone
+                CustomerName
             </th>
             <th>
                 Address
+            </th>
+            <th>
+                PhoneNumber
+            </th>
+            <th>
+                Email
             </th>
             <th>
                 Status
@@ -34,37 +44,33 @@
         </tr>
     </thead>
     <tbody>
-        @if(Model != null)
-        {
-            @foreach (var item in Model)
-           {
-            <tr>
+@foreach (var item in Model) {
+        <tr>
             <td>
                 @item.OrderDate
             </td>
             <td>
-                @item.User.Fullname
+                @item.CustomerName
             </td>
             <td>
-                @item.User.Email
+                @item.Address
             </td>
             <td>
-                @item.User.NumberPhone
+                @item.PhoneNumber
             </td>
             <td>
-                @item.User.Address
+                @item.Email
             </td>
             <td>
                 @item.Status.StatusContent
             </td>
             <td>
                 <a class="btn btn-info" asp-action="Details" asp-route-id="@item.OrderId">Details</a>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.OrderId">Edit</a>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> 
                 <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
             </td>
         </tr>
-           }
-        }
+}
     </tbody>
 </table>
 <div aria-label="Page navigation example">

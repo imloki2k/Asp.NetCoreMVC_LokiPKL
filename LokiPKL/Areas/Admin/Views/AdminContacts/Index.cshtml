@@ -1,0 +1,56 @@
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<LokiPKL.Models.Contact>
+
+@{
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Contacts</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                PhoneNumber
+            </th>
+            <th>
+                Message
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Address
+            </td>
+            <td>
+                @item.PhoneNumber
+            </td>
+            <td>
+                @item.Message
+            </td>
+            <td>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ContactId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<div aria-label="Page navigation example">
+	<ul class="pagination">
+		<pager class="pager-container" list="@Model" asp-action="Index" asp-controller="AdminContacts"></pager>
+	</ul>
+</div>

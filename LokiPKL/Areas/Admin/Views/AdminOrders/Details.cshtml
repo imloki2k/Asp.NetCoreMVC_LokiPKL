@@ -5,63 +5,57 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Details</h1>
+<h2>Details</h2>
 
 <div>
     <h4>Order</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
+    <dl class="dl-horizontal">
+        <dt>
             @Html.DisplayNameFor(model => model.OrderDate)
         </dt>
-        <dd class = "col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.OrderDate)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Fullname)
+        <dt>
+            @Html.DisplayNameFor(model => model.CustomerName)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Fullname)
+        <dd>
+            @Html.DisplayFor(model => model.CustomerName)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Email)
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
+        <dd>
+            @Html.DisplayFor(model => model.Address)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User.NumberPhone)
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.NumberPhone)
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Address)
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Address)
+        <dd>
+            @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderDetails)
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
         </dt>
-        <dd class = "col-sm-10">
-            @foreach (OrderDetail o in ViewBag.OrderDetails)
-           {
-               @o.Product.ProductName <span>|</span>
-               @o.Quantity <span>|</span>
-               @o.FormatPrice <br />
-           }
+        <dd>
+            @Html.DisplayFor(model => model.Note)
         </dd>
-        <dt class = "col-sm-2">
+        <dt>
             @Html.DisplayNameFor(model => model.Status)
         </dt>
-        <dd class = "col-sm-10">
+        <dd>
             @Html.DisplayFor(model => model.Status.StatusContent)
         </dd>
     </dl>
 </div>
-<br />
 <div>
-    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.OrderId">Edit</a>
+    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.OrderId">Edit</a> 
     <a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>

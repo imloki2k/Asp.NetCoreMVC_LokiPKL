@@ -18,8 +18,10 @@ namespace LokiPKL.Models
         {
         }
 
+        public virtual DbSet<Blog> Blogs { get; set; }
         public virtual DbSet<Brand> Brands { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
@@ -40,6 +42,24 @@ namespace LokiPKL.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<Blog>(entity =>
+            {
+                entity.ToTable("Blog");
+
+                entity.Property(e => e.BlogId).HasColumnName("blog_id");
+
+                entity.Property(e => e.BlogContent)
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasColumnName("blog_content");
+
+                entity.Property(e => e.BlogImage)
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .HasColumnName("blog_image")
+                    .IsFixedLength(true);
+            });
 
             modelBuilder.Entity<Brand>(entity =>
             {
@@ -71,13 +91,63 @@ namespace LokiPKL.Models
                     .HasConstraintName("FK_Categories_Brands");
             });
 
+            modelBuilder.Entity<Contact>(entity =>
+            {
+                entity.ToTable("Contact");
+
+                entity.Property(e => e.ContactId).HasColumnName("contact_id");
+
+                entity.Property(e => e.Address)
+                    .IsRequired()
+                    .HasMaxLength(500)
+                    .HasColumnName("address");
+
+                entity.Property(e => e.Message)
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasColumnName("message");
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasMaxLength(150)
+                    .HasColumnName("name");
+
+                entity.Property(e => e.PhoneNumber)
+                    .IsRequired()
+                    .HasMaxLength(10)
+                    .HasColumnName("phone_number")
+                    .IsFixedLength(true);
+            });
+
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.Property(e => e.OrderId).HasColumnName("order_id");
 
+                entity.Property(e => e.Address)
+                    .HasMaxLength(500)
+                    .HasColumnName("address");
+
+                entity.Property(e => e.CustomerName)
+                    .HasMaxLength(150)
+                    .HasColumnName("customer_name");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(150)
+                    .HasColumnName("email")
+                    .IsFixedLength(true);
+
+                entity.Property(e => e.Note)
+                    .HasColumnType("text")
+                    .HasColumnName("note");
+
                 entity.Property(e => e.OrderDate)
                     .HasColumnType("datetime")
                     .HasColumnName("order_date");
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasMaxLength(10)
+                    .HasColumnName("phone_number")
+                    .IsFixedLength(true);
 
                 entity.Property(e => e.StatusId).HasColumnName("status_id");
 
@@ -92,7 +162,6 @@ namespace LokiPKL.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Orders_Users");
             });
 
@@ -149,6 +218,10 @@ namespace LokiPKL.Models
                     .IsRequired()
                     .HasColumnType("ntext")
                     .HasColumnName("description");
+
+                entity.Property(e => e.FeaturedProduct).HasColumnName("featured_product");
+
+                entity.Property(e => e.HotProduct).HasColumnName("hot_product");
 
                 entity.Property(e => e.MainImage)
                     .HasMaxLength(150)

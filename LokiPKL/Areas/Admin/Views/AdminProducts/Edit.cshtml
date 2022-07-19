@@ -5,13 +5,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Edit</h1>
+<h2>Edit</h2>
 
 <h4>Product</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" method="post" enctype="multipart/form-data" >
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ProductId" />
             <div class="form-group">
@@ -46,9 +46,19 @@
             </div>
             <div class="form-group">
                 <label asp-for="MainImage" class="control-label"></label>
-                <input type="file" name="Image" id="Image" asp-for="MainImage" class="form-control" />
+                <input asp-for="MainImage" class="form-control" />
+                <span asp-validation-for="MainImage" class="text-danger"></span>
             </div>
-            <br />
+            <div class="form-group">
+                <label asp-for="HotProduct" class="control-label"></label>
+                <input asp-for="HotProduct" class="form-control" />
+                <span asp-validation-for="HotProduct" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FeaturedProduct" class="control-label"></label>
+                <input asp-for="FeaturedProduct" class="form-control" />
+                <span asp-validation-for="FeaturedProduct" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-success" />
                 <a class="btn btn-primary" asp-action="Index">Back to List</a>

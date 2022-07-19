@@ -12,6 +12,7 @@ namespace LokiPKL.Models
         public int Quantity { get; set; }
         public int Price { get; set; }
 
+
         public string FormatPrice => this.Price.ToString("#,## VNĐ");
 
         public virtual Order Order { get; set; }

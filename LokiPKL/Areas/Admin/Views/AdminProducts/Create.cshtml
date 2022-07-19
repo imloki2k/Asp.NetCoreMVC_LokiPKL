@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Create</h1>
+<h2>Create</h2>
 
 <h4>Product</h4>
 <hr />
@@ -46,7 +46,16 @@
                 <input asp-for="MainImage" class="form-control" />
                 <span asp-validation-for="MainImage" class="text-danger"></span>
             </div>
-            <br />
+            <div class="form-group">
+                <label asp-for="HotProduct" class="control-label"></label>
+                <input asp-for="HotProduct" class="form-control" />
+                <span asp-validation-for="HotProduct" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FeaturedProduct" class="control-label"></label>
+                <input asp-for="FeaturedProduct" class="form-control" />
+                <span asp-validation-for="FeaturedProduct" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-success" />
                 <a class="btn btn-primary" asp-action="Index">Back to List</a>
