@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LokiPKL.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using PagedList.Core;
+using Microsoft.AspNetCore.Http;
 
 namespace LokiPKL.Areas.Admin.Controllers
 {
@@ -14,16 +17,30 @@ namespace LokiPKL.Areas.Admin.Controllers
     {
         private readonly Loki_PKLContext _context;
 
-        public AdminOrdersController(Loki_PKLContext context)
+        public INotyfService _notifyService { get; }
+
+
+        public AdminOrdersController(Loki_PKLContext context, INotyfService notifyService)
         {
+            _notifyService = notifyService;
             _context = context;
         }
 
         // GET: Admin/AdminOrders
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int? page)
         {
-            var loki_PKLContext = _context.Orders.Include(o => o.Status).Include(o => o.User);
-            return View(await loki_PKLContext.ToListAsync());
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 10;
+            var IsOrders = _context.Orders
+                .Include(x => x.User)
+                .Include(x => x.Status)
+                .AsNoTracking()
+                .OrderByDescending(x => x.OrderDate);
+
+            PagedList<Order> models = new PagedList<Order>(IsOrders, pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            return View(models);
         }
 
         // GET: Admin/AdminOrders/Details/5
@@ -92,13 +109,16 @@ namespace LokiPKL.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders
+                .Include(x => x.User)
+                .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {
                 return NotFound();
             }
             ViewData["StatusId"] = new SelectList(_context.OrderStatuses, "StatusId", "StatusContent", order.StatusId);
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "Address", order.UserId);
+            var address = order.User.Address;
+            ViewBag.Address = address;
             return View(order);
         }
 
@@ -109,6 +129,7 @@ namespace LokiPKL.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("OrderId,OrderDate,StatusId,UserId")] Order order)
         {
+            string newAddress = Request.Form["address"];
             if (id != order.OrderId)
             {
                 return NotFound();
@@ -120,6 +141,14 @@ namespace LokiPKL.Areas.Admin.Controllers
                 {
                     _context.Update(order);
                     await _context.SaveChangesAsync();
+                    User u = order.User;
+                    if (u != null)
+                    {
+                        u.Address = newAddress;
+                        _context.Update(u);
+                        _context.SaveChanges();
+                    }
+                    _notifyService.Success("Edit successful!");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -179,6 +208,7 @@ namespace LokiPKL.Areas.Admin.Controllers
             var order = await _context.Orders.FindAsync(id);
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
+            _notifyService.Success("Delete successful!");
             return RedirectToAction(nameof(Index));
         }
 

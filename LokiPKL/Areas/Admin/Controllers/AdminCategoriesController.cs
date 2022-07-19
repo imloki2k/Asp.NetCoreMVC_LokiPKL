@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LokiPKL.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace LokiPKL.Areas.Admin.Controllers
 {
@@ -13,10 +14,12 @@ namespace LokiPKL.Areas.Admin.Controllers
     public class AdminCategoriesController : Controller
     {
         private readonly Loki_PKLContext _context;
+        public INotyfService _notifyService { get; }
 
-        public AdminCategoriesController(Loki_PKLContext context)
+        public AdminCategoriesController(Loki_PKLContext context, INotyfService notifyService)
         {
             _context = context;
+            _notifyService = notifyService;
         }
 
         // GET: Admin/AdminCategories
@@ -63,6 +66,7 @@ namespace LokiPKL.Areas.Admin.Controllers
             {
                 _context.Add(category);
                 await _context.SaveChangesAsync();
+                _notifyService.Success("Add new Category successful!");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", category.BrandId);
@@ -104,6 +108,7 @@ namespace LokiPKL.Areas.Admin.Controllers
                 {
                     _context.Update(category);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Edit successful!");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -149,6 +154,7 @@ namespace LokiPKL.Areas.Admin.Controllers
             var category = await _context.Categories.FindAsync(id);
             _context.Categories.Remove(category);
             await _context.SaveChangesAsync();
+            _notifyService.Success("Delete successful!");
             return RedirectToAction(nameof(Index));
         }
 

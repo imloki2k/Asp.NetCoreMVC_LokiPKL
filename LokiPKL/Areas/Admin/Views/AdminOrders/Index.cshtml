@@ -1,7 +1,9 @@
-﻿@model IEnumerable<LokiPKL.Models.Order>
+﻿@using PagedList.Core.Mvc
+@model PagedList.Core.IPagedList<LokiPKL.Models.Order>
 
 @{
-    ViewData["Title"] = "Index";
+    int CurrentPage = ViewBag.CurrentPage;
+    ViewData["Title"] = "Danh sách đơn hàng" + CurrentPage;
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -11,46 +13,49 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
+                OrderDate
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User.Fullname)
+                Fullname
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User.Email)
+               Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User.NumberPhone)
+                NumberPhone
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User.Address)
+                Address
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Status
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+        @if(Model != null)
+        {
+            @foreach (var item in Model)
+           {
+            <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
+                @item.OrderDate
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Fullname)
+                @item.User.Fullname
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
+                @item.User.Email
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.NumberPhone)
+                @item.User.NumberPhone
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Address)
+                @item.User.Address
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status.StatusContent)
+                @item.Status.StatusContent
             </td>
             <td>
                 <a class="btn btn-info" asp-action="Details" asp-route-id="@item.OrderId">Details</a>
@@ -58,6 +63,12 @@
                 <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
             </td>
         </tr>
-}
+           }
+        }
     </tbody>
 </table>
+<div aria-label="Page navigation example">
+	<ul class="pagination">
+		<pager class="pager-container" list="@Model" asp-action="Index" asp-controller="AdminOrders"></pager>
+	</ul>
+</div>

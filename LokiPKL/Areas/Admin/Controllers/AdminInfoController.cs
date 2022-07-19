@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LokiPKL.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace LokiPKL.Areas.Admin.Controllers
 {
@@ -13,16 +14,19 @@ namespace LokiPKL.Areas.Admin.Controllers
     public class AdminInfoController : Controller
     {
         private readonly Loki_PKLContext _context;
+        public INotyfService _notifyService { get; }
 
-        public AdminInfoController(Loki_PKLContext context)
+        public AdminInfoController(Loki_PKLContext context, INotyfService notifyService)
         {
             _context = context;
+            _notifyService = notifyService;
         }
 
         // GET: Admin/Info
         public async Task<IActionResult> Index()
         {
             var loki_PKLContext = _context.Users.Include(u => u.Role);
+            ViewData["RoleId"] = new SelectList(_context.Roles, "RoleId", "RoleName");
             return View(await loki_PKLContext.ToListAsync());
         }
 
@@ -104,11 +108,13 @@ namespace LokiPKL.Areas.Admin.Controllers
                 {
                     _context.Update(user);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Edit successful!");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!UserExists(user.UserId))
                     {
+                        _notifyService.Error("Edit failed!");
                         return NotFound();
                     }
                     else
@@ -149,6 +155,7 @@ namespace LokiPKL.Areas.Admin.Controllers
             var user = await _context.Users.FindAsync(id);
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
+            _notifyService.Success("Delete successful!");
             return RedirectToAction(nameof(Index));
         }
 

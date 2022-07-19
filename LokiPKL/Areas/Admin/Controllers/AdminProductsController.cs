@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LokiPKL.Models;
 using System.IO;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using PagedList.Core;
 
 namespace LokiPKL.Areas.Admin.Controllers
 {
@@ -15,16 +17,27 @@ namespace LokiPKL.Areas.Admin.Controllers
     {
         private readonly Loki_PKLContext _context;
 
-        public AdminProductsController(Loki_PKLContext context)
+        public INotyfService _notifyService { get; }
+
+
+        public AdminProductsController(Loki_PKLContext context, INotyfService notifyService)
         {
             _context = context;
+            _notifyService = notifyService;
         }
 
         // GET: Admin/AdminProducts
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int? page)
         {
-            var loki_PKLContext = _context.Products.Include(p => p.Brand).Include(p => p.Category);
-            return View(await loki_PKLContext.ToListAsync());
+            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
+            var pageSize = 10;
+            var IsProducts = _context.Products.AsNoTracking()
+                .OrderBy(x => x.ProductId);
+
+            PagedList<Product> models = new PagedList<Product>(IsProducts, pageNumber, pageSize);
+
+            ViewBag.CurrentPage = pageNumber;
+            return View(models);
         }
 
         // GET: Admin/AdminProducts/Details/5
@@ -66,6 +79,7 @@ namespace LokiPKL.Areas.Admin.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
+                _notifyService.Success("Create new product successful!");
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", product.BrandId);
@@ -109,6 +123,7 @@ namespace LokiPKL.Areas.Admin.Controllers
                 {
                     _context.Update(product);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Edit successful!");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -156,6 +171,7 @@ namespace LokiPKL.Areas.Admin.Controllers
             var product = await _context.Products.FindAsync(id);
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
+            _notifyService.Success("Delete successful!");
             return RedirectToAction(nameof(Index));
         }
 

@@ -6,16 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LokiPKL.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace LokiPKL.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class AdminRolesController : Controller
     {
+        public INotyfService _notifyService { get; }
+
         private readonly Loki_PKLContext _context;
 
-        public AdminRolesController(Loki_PKLContext context)
+
+        public AdminRolesController(Loki_PKLContext context, INotyfService notifyService)
         {
+            _notifyService = notifyService;
             _context = context;
         }
 
@@ -99,11 +104,13 @@ namespace LokiPKL.Areas.Admin.Controllers
                 {
                     _context.Update(role);
                     await _context.SaveChangesAsync();
+                    _notifyService.Success("Edit successful!");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!RoleExists(role.RoleId))
                     {
+                        _notifyService.Error("Edit failed!");
                         return NotFound();
                     }
                     else
@@ -142,6 +149,7 @@ namespace LokiPKL.Areas.Admin.Controllers
             var role = await _context.Roles.FindAsync(id);
             _context.Roles.Remove(role);
             await _context.SaveChangesAsync();
+            _notifyService.Success("Delete successful!");
             return RedirectToAction(nameof(Index));
         }
 
