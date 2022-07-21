@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication;
 using LokiPKL.ModelViews;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Text.RegularExpressions;
 
 namespace LokiPKL.Controllers
 {
@@ -27,7 +28,35 @@ namespace LokiPKL.Controllers
             _notifyService = notifyService;
         }
 
-        
+        public static bool isEmail(string inputEmail)
+        {
+            inputEmail = inputEmail ?? string.Empty;
+            string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                  @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                  @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+            Regex re = new Regex(strRegex);
+            if (re.IsMatch(inputEmail))
+                return (true);
+            else
+                return (false);
+        }
+
+
+        public bool IsValidPhone(string Phone)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Phone))
+                    return false;
+                var r = new Regex(@"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$");
+                return r.IsMatch(Phone);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         [HttpGet]
         [AllowAnonymous]
@@ -53,30 +82,54 @@ namespace LokiPKL.Controllers
         {
             if (ModelState.IsValid)
             {
-                var f_password = EncodingMD5.GetMD5(_user.Password);
-                var user = _context.Users.SingleOrDefault(s => s.Email.Equals(_user.UserName) && s.Password.Equals(f_password));
-                if (user != null)
+                if (isEmail(_user.UserName))
                 {
-                    //add session
-                    HttpContext.Session.SetString("UserId", user.UserId.ToString());
-                    _notifyService.Success("Login successful!");
-                    
-                    //identity
-                    var claims = new List<Claim>
+                    if (_user.Password.Length >= 6)
+                    {
+                        var f_password = EncodingMD5.GetMD5(_user.Password);
+                        var user = _context.Users.SingleOrDefault(s => s.Email.Equals(_user.UserName) && s.Password.Equals(f_password));
+                        if (user != null)
+                        {
+                            //add session
+                            HttpContext.Session.SetString("UserId", user.UserId.ToString());
+                            _notifyService.Success("Login successful!");
+
+                            //identity
+                            var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, user.Fullname),
                         new Claim("UserId", user.UserId.ToString()),
                     };
-                    ClaimsIdentity identity = new ClaimsIdentity(claims, "login");
-                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
-                    await HttpContext.SignInAsync(principal);
-                    return RedirectToAction("Index","Home");
+                            ClaimsIdentity identity = new ClaimsIdentity(claims, "login");
+                            ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                            await HttpContext.SignInAsync(principal);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            ViewBag.Error = "Login failed";
+                            _notifyService.Error("Wrong email or password");
+                            return RedirectToAction("Login", "Accounts");
+                        }
+                    }
+                    else
+                    {
+                        _notifyService.Error("Password must more than 6 digits ơr letters");
+                        return RedirectToAction("Login", "Accounts");
+                    }
                 }
                 else
                 {
-                    ViewBag.error = "Login failed";
-                    return RedirectToAction("Index","Accounts");
+                    ViewBag.Error = "Login failed";
+                    _notifyService.Error("Email wrong format");
+                    return RedirectToAction("Login", "Accounts");
                 }
+
+            }
+            else
+            {
+                _notifyService.Error("Please enter email and password");
+                return RedirectToAction("Login", "Accounts");
             }
             return View();
         }
@@ -105,8 +158,22 @@ namespace LokiPKL.Controllers
                 {
                     if(newUser.Password != newUser.ConfirmPassword)
                     {
-                        _notifyService.Error("Confirm password wrong!");
-                        return RedirectToAction("Index");
+                        _notifyService.Error("Confirm password wrong");
+                        return RedirectToAction("Register", "Accounts");
+                    }
+                    else if (!isEmail(newUser.Email))
+                    {
+                        _notifyService.Error("Email wrong format");
+                        return RedirectToAction("Register", "Accounts");
+                    }
+                    else if(IsValidPhone(newUser.PhoneNumber) == false)
+                    {
+                        _notifyService.Error("PhoneNumber wrong format");
+                        return RedirectToAction("Register", "Accounts");
+                    }else if(newUser.Password.ToString().Length < 6)
+                    {
+                        _notifyService.Error("Password must more than 6 digits ơr letters");
+                        return RedirectToAction("Register", "Accounts");
                     }
                     else
                     {
@@ -124,7 +191,7 @@ namespace LokiPKL.Controllers
                         _notifyService.Success("Register successful!");
 
                         //add session
-                        HttpContext.Session.SetString("UserId",user.UserId.ToString());
+                        HttpContext.Session.SetString("UserId", user.UserId.ToString());
 
                         //identity
                         var claims = new List<Claim>
@@ -140,13 +207,19 @@ namespace LokiPKL.Controllers
                 }
                 else
                 {
-                    ViewBag.error = "Email already exists";
-                    return RedirectToAction("Index", "Accounts");
+                    ViewBag.Error = "Email or phone number is already exists";
+                    _notifyService.Error("Email or phone number is already exists");
+                    return RedirectToAction("Register", "Accounts");
                 }
 
 
             }
-            return RedirectToAction("Index", "Accounts");
+            else
+            {
+                _notifyService.Error("Please enter full information");
+                return RedirectToAction("Register", "Accounts");
+            }
+            return RedirectToAction("Register", "Accounts");
         }
 
         [HttpGet]
@@ -162,17 +235,53 @@ namespace LokiPKL.Controllers
         [Route("Dashboard.html", Name = "DashBoard")]
         public IActionResult DashBoard()
         {
+            
             var tkID = HttpContext.Session.GetString("UserId");
             if (tkID != null)
             {
                 var customer = _context.Users.AsNoTracking().SingleOrDefault(x => x.UserId == Convert.ToInt32(tkID));
                 if(customer != null)
                 {
+                    List<Brand> brands = _context.Brands.ToList();
+                    List<Category> categories = _context.Categories.ToList();
+                    ViewBag.Brands = brands;
+                    ViewBag.Categories = categories;
                     return View(customer);
-                }    
+                }
+                return RedirectToAction("Login", "Accounts");
             }
 
-            return RedirectToAction("Login", "Accounts");
+            return View();
+        }
+
+
+        public IActionResult ChangePassword(string OldPassword, string NewPassword)
+        {
+            var uID = HttpContext.Session.GetString("UserId");
+            var user = _context.Users.AsNoTracking().SingleOrDefault(u => u.UserId == Convert.ToInt32(uID));
+            var f_password = EncodingMD5.GetMD5(OldPassword);
+            if(user.Password.Trim().Equals(f_password.ToString()))
+            {
+                if (NewPassword.Length < 6)
+                {
+                    _notifyService.Error("NewPassword must more than 6 digits ơr letters");
+                    RedirectToAction("Dashboard", "Accounts");
+                }
+                else
+                {
+                    user.Password = EncodingMD5.GetMD5(NewPassword);
+                    _context.Update(user);
+                    _context.SaveChangesAsync();
+                    _notifyService.Success("Change Password successful!");
+                    RedirectToAction("Dashboard", "Accounts");
+                }
+            }
+            else
+            {
+                _notifyService.Error("OldPassword incorrect!");
+                RedirectToAction("Dashboard", "Accounts");
+            }
+            return RedirectToAction("Dashboard", "Accounts");
         }
     }
 }

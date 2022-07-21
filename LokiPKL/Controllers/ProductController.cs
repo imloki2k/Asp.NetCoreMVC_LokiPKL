@@ -16,11 +16,26 @@ namespace LokiPKL.Controllers
             _context = context;
         }
 
-        public IActionResult Index(int? page, int id)
+        public IActionResult Index(int? page, int id, string search)
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 12;
-            if(id == 0)
+
+            if (search != null)
+            {
+                var IsProducts = _context.Products.AsNoTracking()
+                    .Where(x => x.ProductName.Contains(search))
+                    .OrderBy(x => x.ProductId);
+                PagedList<Product> models = new PagedList<Product>(IsProducts, pageNumber, pageSize);
+                ViewBag.CurrentPage = pageNumber;
+
+                List<Brand> brands = _context.Brands.ToList();
+                List<Category> categories = _context.Categories.ToList();
+                ViewBag.Brands = brands;
+                ViewBag.Categories = categories;
+                return View(models);
+            }
+            else if (id == 0)
             {
                 var IsProducts = _context.Products.AsNoTracking()
                 .OrderBy(x => x.ProductId);
@@ -56,7 +71,7 @@ namespace LokiPKL.Controllers
                 .Include(x => x.Category)
                 .Include(x => x.Brand)
                 .FirstOrDefault(x => x.ProductId == id);
-            if(product == null)
+            if (product == null)
             {
                 return NotFound();
             }

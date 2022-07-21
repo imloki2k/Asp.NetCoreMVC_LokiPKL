@@ -490,3 +490,5 @@ C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Product\
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Blog\SingleBlog.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Accounts\Login.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Accounts\Register.cshtml.g.cs
+C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Accounts\DashBoard.cshtml.g.cs
+C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\LokiPKL.csproj.AssemblyReference.cache
