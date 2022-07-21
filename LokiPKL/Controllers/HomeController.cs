@@ -27,10 +27,14 @@ namespace LokiPKL.Controllers
 
         public IActionResult Index()
         {
+            List<Product> featured_products = _context.Products.Where(p => p.FeaturedProduct == true).ToList();
+            List<Product> hot_products = _context.Products.Where(p => p.HotProduct == true).ToList();
             List<Brand> brands = _context.Brands.ToList();
             List<Category> categories = _context.Categories.ToList();
             ViewBag.Brands = brands;
             ViewBag.Categories = categories;
+            ViewBag.HotProducts = hot_products;
+            ViewBag.FeaturedProducts = featured_products;
             return View();
         }
 

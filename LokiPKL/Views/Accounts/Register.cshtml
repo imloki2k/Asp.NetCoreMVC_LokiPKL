@@ -1,0 +1,75 @@
+﻿@model LokiPKL.ModelViews.RegisterModelView
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt_30">
+      <div class="row ">
+        
+        @await Html.PartialAsync("_CategoryLeftPartialView")
+
+        <div class="col-sm-8 col-lg-9 mtb_20">
+          <!-- contact  -->
+          <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+              <div class="panel-login panel">
+                <div class="panel-heading">
+                  <div class="row mb_20">
+                    <div class="col-xs-6">
+                      <a asp-controller="Accounts" asp-action="Login">Login</a>
+                    </div>
+                    <div class="col-xs-6">
+                      <a asp-controller="Accounts" asp-action="Register">Register</a>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+                <div class="panel-body">
+                  <div class="row">
+                    <div class="col-lg-12">
+
+                        
+
+                      <form id="login-form" asp-controller="Accounts" asp-action="Register">
+                          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                          <input type="text" asp-for="FullName" tabindex="1" class="form-control" placeholder="Username" >
+                          <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                          <input type="email" asp-for="Email" tabindex="2" class="form-control" placeholder="Email Address" >
+                          <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                          <input type="text" asp-for="PhoneNumber" tabindex="3" class="form-control" placeholder="Phone Number" >
+                          <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                          <input type="password" asp-for="Password" tabindex="4" class="form-control" placeholder="Password" >
+                          <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                          <input type="password" asp-for="ConfirmPassword" tabindex="5" class="form-control" placeholder="Confirm Password" >
+                          <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                          <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                              <input type="submit" name="register-submit" id="register-submit" tabindex="6" class="form-control btn btn-register" value="Register Now">
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+

@@ -291,10 +291,6 @@ namespace LokiPKL.Models
             {
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
-                entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasMaxLength(500)
-                    .HasColumnName("address");
 
                 entity.Property(e => e.Email)
                     .IsRequired()

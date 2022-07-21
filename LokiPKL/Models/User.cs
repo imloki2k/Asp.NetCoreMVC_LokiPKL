@@ -19,7 +19,7 @@ namespace LokiPKL.Models
         public string NumberPhone { get; set; }
         public string Password { get; set; }
         public int RoleId { get; set; }
-        public string Address { get; set; }
+
 
         public virtual Role Role { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

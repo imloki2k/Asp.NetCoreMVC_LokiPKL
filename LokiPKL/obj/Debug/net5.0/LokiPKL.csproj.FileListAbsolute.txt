@@ -466,7 +466,6 @@ C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Home\Abo
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Shared\_CategoryLeftPartialView.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Blog\Index.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Product\Index.cshtml.g.cs
-C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Product\Details.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminProducts\Create.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminProducts\Delete.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminProducts\Details.cshtml.g.cs
@@ -487,4 +486,7 @@ C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Areas\Admin\Vi
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminBlogs\Details.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminBlogs\Edit.cshtml.g.cs
 C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Areas\Admin\Views\AdminBlogs\Index.cshtml.g.cs
-C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\LokiPKL.csproj.AssemblyReference.cache
+C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Product\Details.cshtml.g.cs
+C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Blog\SingleBlog.cshtml.g.cs
+C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Accounts\Login.cshtml.g.cs
+C:\Users\Loki\source\repos\LokiPKL\LokiPKL\obj\Debug\net5.0\Razor\Views\Accounts\Register.cshtml.g.cs

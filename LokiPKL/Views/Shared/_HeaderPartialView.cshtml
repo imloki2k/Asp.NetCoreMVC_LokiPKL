@@ -1,134 +1,161 @@
 ﻿
+
+
 @*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 
 
 <header id="header">
-      <div class="header-top">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12 col-sm-4">
-              <div class="header-top-left">
-                <div class="contact"><span class="hidden-xs hidden-sm hidden-md">Days a week from 8:00 am to 7:00 pm</span></div>
-              </div>
-            </div>
-            <div class="col-xs-12 col-sm-8">
-              <ul class="header-top-right text-right">
-                <li class="account"><a href="login.html">My Account</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+	<div class="header-top">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-4">
+					<div class="header-top-left">
+						<div class="contact"><span class="hidden-xs hidden-sm hidden-md">Days a week from 8:00 am to 7:00 pm</span></div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-8">
+					<ul class="header-top-right text-right">
+						@if(User.Identity.IsAuthenticated)
+						{
+							<li>
+								My Account
+							</li>
+							<li>
+								<a href="/Logout.html">Log out</a>
+							</li>
+						}
+						else
+						{
+							<li>
+								<a href="/Login.html">Login</a>
+							</li>
+							<li>
+								<a href="/Register.html">Register</a>
+							</li>
+						}
 
-      <div class="header">
-        <div class="container">
-          <div class="row">
-            <div class="col-xs-12 col-sm-4">
-              <div class="main-search mt_40">
-                <input id="search-input" name="search" value="" placeholder="Search" class="form-control input-lg" autocomplete="off" type="text">
-                <span class="input-group-btn">
-              <button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
-              </span> </div>
-            </div>
-            <div class="navbar-header col-xs-6 col-sm-4"> <a class="navbar-brand" href="index.html"> <img alt="themini" src="~/assets/images/logo.png"> </a> </div>
-            <div class="col-xs-6 col-sm-4 shopcart">
-              <div id="cart" class="btn-group btn-block mtb_40">
-                <button type="button" class="btn" data-target="#cart-dropdown" data-toggle="collapse" aria-expanded="true"><span id="shippingcart">Shopping cart</span><span id="cart-total">items (0)</span> </button>
-              </div>
-              <div id="cart-dropdown" class="cart-menu collapse">
-                <ul>
-                  <li>
-                    <table class="table table-striped">
-                      <tbody>
-                        <tr>
-                          <td class="text-center"><a href="#"><img src="~/assets/images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a></td>
-                          <td class="text-left product-name"><a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
-                            <input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-                          </td>
-                          <td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
-                        </tr>
-                        <tr>
-                          <td class="text-center"><a href="#"><img src="~/assets/images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a></td>
-                          <td class="text-left product-name"><a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
-                            <input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-                          </td>
-                          <td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </li>
-                  <li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                    <table class="table">
-                      <tbody>
-                        <tr>
-                          <td class="text-right"><strong>Sub-Total</strong></td>
-                          <td class="text-right">$2,100.00</td>
-                        </tr>
-                        <tr>
-                          <td class="text-right"><strong>Eco Tax (-2.00)</strong></td>
-                          <td class="text-right">$2.00</td>
-                        </tr>
-                        <tr>
-                          <td class="text-right"><strong>VAT (20%)</strong></td>
-                          <td class="text-right">$20.00</td>
-                        </tr>
-                        <tr>
-                          <td class="text-right"><strong>Total</strong></td>
-                          <td class="text-right">$2,122.00</td>
-                        </tr>
-                      </tbody>
-                    </table>
+	<div class="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-12 col-sm-4">
 
-                  </li>
-                  <li>
-                    <form action="cart_page.html">
-                      <input class="btn pull-left mt_10" value="View cart" type="submit">
-                    </form>
-                    <form action="checkout_page.html">
-                      <input class="btn pull-right mt_10" value="Checkout" type="submit">
-                    </form>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <nav class="navbar">
-            <p>menu</p>
-            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse"> <span class="i-bar"><i class="fa fa-bars"></i></span></button>
-            <div class="collapse navbar-collapse js-navbar-collapse">
-              <ul id="menu" class="nav navbar-nav">
-                <li> <a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li class="dropdown mega-dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection </a>
-                  <ul class="dropdown-menu mega-dropdown-menu row">
+					<div class="main-search mt_40">
+						<input id="search-input" name="search" value="" placeholder="Search" class="form-control input-lg" autocomplete="off" type="text">
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
+						</span>
+					</div>
 
-                  @foreach (var item in ViewBag.Brands)
-                 {
-                   <li class="col-md-3">
-                      <ul>
-                        <li class="dropdown-header">@item.BrandName</li>
-                        @foreach (var c in ViewBag.Categories)
-                        {
-                            @if(item.BrandId == c.BrandId){
-                               <li><a href="#">@c.CategoryName</a></li>
-                            }
-                        }
-                      </ul>
-                    </li>  
-                 }
-                    
-                  </ul>
-                </li>
-                <li> <a asp-controller="Product" asp-action="Index">Shop</a></li>
-                <li> <a asp-controller="Blog" asp-action="Index">Blog</a></li>
-                <li> <a asp-controller="Home" asp-action="About">About us</a></li>
-                <li> <a asp-controller="Home" asp-action="Contact">Contact us</a></li>
-              </ul>
-            </div>
-            <!-- /.nav-collapse -->
-          </nav>
-        </div>
-      </div>
-    </header>
+				</div>
+				<div class="navbar-header col-xs-6 col-sm-4"> <a class="navbar-brand" href="index.html"> <img alt="themini" src="~/assets/images/logo.png"> </a> </div>
+				<div class="col-xs-6 col-sm-4 shopcart">
+					<div id="cart" class="btn-group btn-block mtb_40">
+						<button type="button" class="btn" data-target="#cart-dropdown" data-toggle="collapse" aria-expanded="true"><span id="shippingcart">Shopping cart</span><span id="cart-total">items (0)</span> </button>
+					</div>
+					<div id="cart-dropdown" class="cart-menu collapse">
+						<ul>
+							<li>
+								<table class="table table-striped">
+									<tbody>
+										<tr>
+											<td class="text-center"><a href="#"><img src="~/assets/images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a></td>
+											<td class="text-left product-name">
+												<a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
+												<input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
+											</td>
+											<td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
+										</tr>
+										<tr>
+											<td class="text-center"><a href="#"><img src="~/assets/images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a></td>
+											<td class="text-left product-name">
+												<a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
+												<input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
+											</td>
+											<td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
+										</tr>
+									</tbody>
+								</table>
+							</li>
+							<li>
+
+								<table class="table">
+									<tbody>
+										<tr>
+											<td class="text-right"><strong>Sub-Total</strong></td>
+											<td class="text-right">$2,100.00</td>
+										</tr>
+										<tr>
+											<td class="text-right"><strong>Eco Tax (-2.00)</strong></td>
+											<td class="text-right">$2.00</td>
+										</tr>
+										<tr>
+											<td class="text-right"><strong>VAT (20%)</strong></td>
+											<td class="text-right">$20.00</td>
+										</tr>
+										<tr>
+											<td class="text-right"><strong>Total</strong></td>
+											<td class="text-right">$2,122.00</td>
+										</tr>
+									</tbody>
+								</table>
+
+							</li>
+							<li>
+								<form action="cart_page.html">
+									<input class="btn pull-left mt_10" value="View cart" type="submit">
+								</form>
+								<form action="checkout_page.html">
+									<input class="btn pull-right mt_10" value="Checkout" type="submit">
+								</form>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<nav class="navbar">
+				<p>menu</p>
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".js-navbar-collapse"> <span class="i-bar"><i class="fa fa-bars"></i></span></button>
+				<div class="collapse navbar-collapse js-navbar-collapse">
+					<ul id="menu" class="nav navbar-nav">
+						<li> <a asp-controller="Home" asp-action="Index">Home</a></li>
+						<li class="dropdown mega-dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection </a>
+							<ul class="dropdown-menu mega-dropdown-menu row">
+
+								@foreach (var item in ViewBag.Brands)
+								{
+									<li class="col-md-3">
+										<ul>
+											<li class="dropdown-header">@item.BrandName</li>
+											@foreach (var c in ViewBag.Categories)
+											{
+												@if (item.BrandId == c.BrandId)
+												{
+													<li><a asp-controller="Product" asp-action="Index" asp-route-id="@c.CategoryId">@c.CategoryName</a></li>
+												}
+											}
+										</ul>
+									</li>
+								}
+
+							</ul>
+						</li>
+						<li> <a asp-controller="Product" asp-action="Index">Shop</a></li>
+						<li> <a asp-controller="Blog" asp-action="Index">Blog</a></li>
+						<li> <a asp-controller="Home" asp-action="About">About us</a></li>
+						<li> <a asp-controller="Home" asp-action="Contact">Contact us</a></li>
+					</ul>
+				</div>
+				<!-- /.nav-collapse -->
+			</nav>
+		</div>
+	</div>
+</header>

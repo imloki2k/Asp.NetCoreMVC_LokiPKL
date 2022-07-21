@@ -4,77 +4,80 @@
 <!--<![endif]-->
 
 <head>
-  <!-- =====  BASIC PAGE NEEDS  ===== -->
-  <meta charset="utf-8">
-  <title>Loki PKL</title>
-  <!-- =====  SEO MATE  ===== -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-  <meta name="distribution" content="global">
-  <meta name="revisit-after" content="2 Days">
-  <meta name="robots" content="ALL">
-  <meta name="rating" content="8 YEARS">
-  <meta name="Language" content="en-us">
-  <meta name="GOOGLEBOT" content="NOARCHIVE">
-  <!-- =====  MOBILE SPECIFICATION  ===== -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="viewport" content="width=device-width">
-  <!-- =====  CSS  ===== -->
-  <link rel="stylesheet" type="text/css" href="~/assets/css/font-awesome.min.css" />
-  <link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap.css" />
-  <link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
-  <link rel="stylesheet" type="text/css" href="~/assets/css/magnific-popup.css">
-  <link rel="stylesheet" type="text/css" href="~/assets/css/owl.carousel.css">
-  <link rel="stylesheet" type="text/css" href="~/assets/css/ionicons.min.css" />
-  <link rel="stylesheet" type="text/css" href="~/assets/css/jquery-ui.css" />
+	<!-- =====  BASIC PAGE NEEDS  ===== -->
+	<meta charset="utf-8">
+	<title>Loki PKL</title>
+	<!-- =====  SEO MATE  ===== -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="distribution" content="global">
+	<meta name="revisit-after" content="2 Days">
+	<meta name="robots" content="ALL">
+	<meta name="rating" content="8 YEARS">
+	<meta name="Language" content="en-us">
+	<meta name="GOOGLEBOT" content="NOARCHIVE">
+	<!-- =====  MOBILE SPECIFICATION  ===== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="viewport" content="width=device-width">
+	<!-- =====  CSS  ===== -->
+	<link rel="stylesheet" type="text/css" href="~/assets/css/font-awesome.min.css" />
+	<link rel="stylesheet" type="text/css" href="~/assets/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="~/assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="~/assets/css/magnific-popup.css" />
+	<link rel="stylesheet" type="text/css" href="~/assets/css/owl.carousel.css" />
+	<link rel="stylesheet" type="text/css" href="~/assets/css/ionicons.min.css" />
+	<link rel="stylesheet" type="text/css" href="~/assets/css/jquery-ui.css" />
 
-  <link rel="shortcut icon" href="~/assets/images/icon-favicon.png">
-  <link rel="apple-touch-icon" href="~/assets/images/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="~/assets/images/apple-touch-icon-114x114.png">
+	<link rel="shortcut icon" href="~/assets/images/icon-favicon.png">
+	<link rel="apple-touch-icon" href="~/assets/images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="~/assets/images/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="~/assets/images/apple-touch-icon-114x114.png">
+	<style>
+		div.heading-part, li.category_ {
+			text-align: center;
+		}
+	</style>
 </head>
 
 <body>
-  <!-- =====  LODER  ===== -->
-  <div class="loder"></div>
-  <div class="wrapper">
-    <!-- =====  HEADER START  ===== -->
-    @await Html.PartialAsync("_HeaderPartialView")
-    <!-- =====  HEADER END  ===== -->
+	<!-- =====  LODER  ===== -->
+	<div class="loder"></div>
+	<div class="wrapper">
+		<!-- =====  HEADER START  ===== -->
+		@await Html.PartialAsync("_HeaderPartialView")
+		<!-- =====  HEADER END  ===== -->
+		@RenderBody()
 
 
-    @RenderBody()
-
-
-    <!-- =====  FOOTER START  ===== -->
-    @await Html.PartialAsync("_FooterPartialView")
-    <!-- =====  FOOTER END  ===== -->
-  </div>
-  <a id="scrollup"></a>
-  <script src="~/assets/js/jQuery_v3.1.1.min.js"></script>
-  <script src="~/assets/js/owl.carousel.min.js"></script>
-  <script src="~/assets/js/bootstrap.min.js"></script>
-  <script src="~/assets/js/jquery.magnific-popup.js"></script>
-  <script src="~/assets/js/jquery.firstVisitPopup.js"></script>
-  <script src="~/assets/js/custom.js"></script>
-  <script src="~/assets/js/jquery-ui.js"></script>
-<script>
-  $(function() {
-    $("#slider-range").slider({
-      range: true,
-      min: 0,
-      max: 500,
-      values: [75, 300],
-      slide: function(event, ui) {
-        $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
-      }
-    });
-    $("#amount").val("$" + $("#slider-range").slider("values", 0) +
-      " - $" + $("#slider-range").slider("values", 1));
-  });
-  </script>
-    @await Component.InvokeAsync("Notyf")
+		<!-- =====  FOOTER START  ===== -->
+		@await Html.PartialAsync("_FooterPartialView")
+		<!-- =====  FOOTER END  ===== -->
+	</div>
+	<a id="scrollup"></a>
+	<script src="~/assets/js/jQuery_v3.1.1.min.js"></script>
+	<script src="~/assets/js/owl.carousel.min.js"></script>
+	<script src="~/assets/js/bootstrap.min.js"></script>
+	<script src="~/assets/js/jquery.magnific-popup.js"></script>
+	<script src="~/assets/js/jquery.firstVisitPopup.js"></script>
+	<script src="~/assets/js/custom.js"></script>
+	<script src="~/assets/js/jquery-ui.js"></script>
+	<script>
+		$(function() {
+		  $("#slider-range").slider({
+			range: true,
+			min: 0,
+			max: 500,
+			values: [75, 300],
+			slide: function(event, ui) {
+			  $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
+			}
+		  });
+		  $("#amount").val("$" + $("#slider-range").slider("values", 0) +
+			" - $" + $("#slider-range").slider("values", 1));
+		});
+	</script>
+	@await Component.InvokeAsync("Notyf")
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

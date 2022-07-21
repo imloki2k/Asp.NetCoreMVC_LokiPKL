@@ -61,7 +61,7 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,UserName,Fullname,Email,NumberPhone,Password,RoleId,Address")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,UserName,Fullname,Email,NumberPhone,Password,RoleId")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserName,Fullname,Email,NumberPhone,Password,RoleId,Address")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,UserName,Fullname,Email,NumberPhone,Password,RoleId")] User user)
         {
             if (id != user.UserId)
             {
