@@ -21,7 +21,7 @@ namespace LokiPKL.Controllers
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
             var pageSize = 12;
             var IsBlogs = _context.Blogs.AsNoTracking()
-                .OrderBy(x => x.BlogId);
+                .OrderByDescending(x => x.BlogId);
             PagedList<Blog> models = new PagedList<Blog>(IsBlogs, pageNumber, pageSize);
             ViewBag.CurrentPage = pageNumber;
 

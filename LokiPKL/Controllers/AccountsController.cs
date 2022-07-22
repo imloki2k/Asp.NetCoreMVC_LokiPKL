@@ -87,16 +87,20 @@ namespace LokiPKL.Controllers
                     if (_user.Password.Length >= 6)
                     {
                         var f_password = EncodingMD5.GetMD5(_user.Password);
-                        var user = _context.Users.SingleOrDefault(s => s.Email.Equals(_user.UserName) && s.Password.Equals(f_password));
+                        var user = _context.Users
+                            .Include(u => u.Role)
+                            .SingleOrDefault(s => s.Email.Equals(_user.UserName) && s.Password.Equals(f_password));
                         if (user != null)
                         {
                             //add session
                             HttpContext.Session.SetString("UserId", user.UserId.ToString());
+                            var UserId = HttpContext.Session.GetString("UserId");
                             _notifyService.Success("Login successful!");
 
                             //identity
                             var claims = new List<Claim>
                     {
+                        new Claim(ClaimTypes.Role, user.Role.RoleName.Trim().ToString()),
                         new Claim(ClaimTypes.Name, user.Fullname),
                         new Claim("UserId", user.UserId.ToString()),
                     };
@@ -184,7 +188,8 @@ namespace LokiPKL.Controllers
                             NumberPhone = newUser.PhoneNumber,
                             Password = EncodingMD5.GetMD5(newUser.Password),
                             UserName = newUser.FullName.Trim(),
-                            RoleId = 2
+                            RoleId = 2,
+                            Role = _context.Roles.SingleOrDefault(x => x.RoleId == 2),
                         };
                         _context.Add(user);
                         await _context.SaveChangesAsync();
@@ -196,13 +201,14 @@ namespace LokiPKL.Controllers
                         //identity
                         var claims = new List<Claim>
                     {
+                        new Claim(ClaimTypes.Role, user.Role.RoleName.Trim().ToString()),
                         new Claim(ClaimTypes.Name, user.Fullname),
                         new Claim("UserId", user.UserId.ToString()),
                     };
                         ClaimsIdentity identity = new ClaimsIdentity(claims, "login");
                         ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                         await HttpContext.SignInAsync(principal);
-                        return RedirectToAction("Dashboard", "Accounts");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else

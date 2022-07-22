@@ -8,10 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using LokiPKL.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using PagedList.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LokiPKL.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminContactsController : Controller
     {
         private readonly Loki_PKLContext _context;
