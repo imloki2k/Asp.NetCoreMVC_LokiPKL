@@ -1,152 +1,182 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 <style>
-    .backgound-image{
-        margin-right : 174.6px;
-        margin-left : 174.6px;
-    }
+	.backgound-image {
+		margin-right: 174.6px;
+		margin-left: 174.6px;
+	}
 </style>
 <!-- =====  BANNER STRAT  ===== -->
-    <div class="banner">
-      <div class="main-banner owl-carousel">
-        <div class="item"><a href="#"><img class="backgound-image" style="width : 1170px;"  src="~/assets/Banner/banner3.jpg" alt="Main Banner" class="img-responsive" /></a></div>
-        <div class="item"><a href="#"><img class="backgound-image" style="width : 1170px;"  src="~/assets/Banner/banner1.jpg" alt="Main Banner" class="img-responsive" /></a></div>
-        <div class="item"><a href="#"><img class="backgound-image" style="width : 1170px;" src="~/assets/Banner/banner2.jpg" alt="Main Banner" class="img-responsive" /></a></div>
-        <div class="item"><a href="#"><img class="backgound-image" style="width : 1170px;" src="~/assets/Banner/banner4.jpg" alt="Main Banner" class="img-responsive" /></a></div>
-      </div>
-    </div>
-    <!-- =====  BANNER END  ===== -->
-    <!-- =====  CONTAINER START  ===== -->
-    <div class="container">
-      <!-- =====  SUB BANNER  STRAT ===== -->
-      <div class="row">
-        <div class="col-sm-3 mt_20 cms-icon ">
-          <div class="feature-i-left ptb_30 ">
-            <div class="icon-right Shipping"></div>
-            <h6>Free Shipping</h6>
-            <p>Free dedlivery worldwide</p>
-          </div>
-        </div>
-        <div class="col-sm-3 mt_20 cms-icon ">
-          <div class="feature-i-left ptb_30 ">
-            <div class="icon-right Order"></div>
-            <h6>Order Onlive</h6>
-            <p>Hours : 8am - 10pm</p>
-          </div>
-        </div>
-        <div class="col-sm-3 mt_20 cms-icon ">
-          <div class="feature-i-left ptb_30 ">
-            <div class="icon-right Save"></div>
-            <h6>Shop And Save</h6>
-            <p>For All Spices & Herbs</p>
-          </div>
-        </div>
-        <div class="col-sm-3 mt_20 cms-icon ">
-          <div class="feature-i-left ptb_30 ">
-            <div class="icon-right Safe"></div>
-            <h6>Safe Shoping</h6>
-            <p>Ensure genuine 100%</p>
-          </div>
-        </div>
-      </div>
-      <div class="row ">
-        <div class="col-sm-12 mt_30">
-          <!-- =====  PRODUCT TAB  ===== -->
-          <div id="product-tab" class="mt_10">
-            <div class="heading-part mb_10 ">
-              <h2 class="main_title">Featured Products</h2>
-            </div>
-            <div class="tab-content clearfix box">
-              <div class="tab-pane active" id="nArrivals">
-                <div class="nArrivals owl-carousel">
+<div class="banner">
+	<div class="main-banner owl-carousel">
+		<div class="item"><a href="#"><img class="backgound-image" style="width : 1170px;" src="~/assets/Banner/banner3.jpg" alt="Main Banner" class="img-responsive" /></a></div>
+		<div class="item"><a href="#"><img class="backgound-image" style="width : 1170px;" src="~/assets/Banner/banner1.jpg" alt="Main Banner" class="img-responsive" /></a></div>
+		<div class="item"><a href="#"><img class="backgound-image" style="width : 1170px;" src="~/assets/Banner/banner2.jpg" alt="Main Banner" class="img-responsive" /></a></div>
+		<div class="item"><a href="#"><img class="backgound-image" style="width : 1170px;" src="~/assets/Banner/banner4.jpg" alt="Main Banner" class="img-responsive" /></a></div>
+	</div>
+</div>
+<!-- =====  BANNER END  ===== -->
+<!-- =====  CONTAINER START  ===== -->
+<div class="container">
+	<!-- =====  SUB BANNER  STRAT ===== -->
+	<div class="row">
+		<div class="col-sm-3 mt_20 cms-icon ">
+			<div class="feature-i-left ptb_30 ">
+				<div class="icon-right Shipping"></div>
+				<h6>Free Shipping</h6>
+				<p>Free dedlivery worldwide</p>
+			</div>
+		</div>
+		<div class="col-sm-3 mt_20 cms-icon ">
+			<div class="feature-i-left ptb_30 ">
+				<div class="icon-right Order"></div>
+				<h6>Order Onlive</h6>
+				<p>Hours : 8am - 10pm</p>
+			</div>
+		</div>
+		<div class="col-sm-3 mt_20 cms-icon ">
+			<div class="feature-i-left ptb_30 ">
+				<div class="icon-right Save"></div>
+				<h6>Shop And Save</h6>
+				<p>For All Spices & Herbs</p>
+			</div>
+		</div>
+		<div class="col-sm-3 mt_20 cms-icon ">
+			<div class="feature-i-left ptb_30 ">
+				<div class="icon-right Safe"></div>
+				<h6>Safe Shoping</h6>
+				<p>Ensure genuine 100%</p>
+			</div>
+		</div>
+	</div>
+	<div class="row ">
+		<div class="col-sm-12 mt_30">
+			<!-- =====  PRODUCT TAB  ===== -->
+			<div id="product-tab" class="mt_10">
+				<div class="heading-part mb_10 ">
+					<h2 class="main_title">Featured Products</h2>
+				</div>
+				<div class="tab-content clearfix box">
+					<div class="tab-pane active" id="nArrivals">
+						<div class="nArrivals owl-carousel">
 
-                @foreach (var item in ViewBag.FeaturedProducts)
-               {
-                 <div class="product-grid">
-                    <div class="item">
-                      <div class="product-thumb">
-                        <div class="image product-imageblock"> 
-                            <a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId"> 
-                            <img data-name="product_image" src="~/Upload/Main_image/@item.MainImage" alt="Product Image" title="Product Image" class="img-responsive" style="height:208.13px"> 
-                            <img src="~/Upload/Main_image/@item.MainImage" alt="Product Image" title="Product Image" class="img-responsive" style="height:208.13px"> 
-                            </a>
-                          <div class="button-group text-center">
-                            <div class="add-to-cart"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId"><span>Add to cart</span></a></div>
-                          </div>
-                        </div>
-                        <div class="caption product-detail text-center">
-                          <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-x"></i></span> </div>
-                          <h4 data-name="product_name" class="product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductName</a></h4>
-                          <span class="price"><span class="amount">@item.FormatPrice</span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>  
-               }
+							@foreach (var item in ViewBag.FeaturedProducts)
+							{
+								<div class="product-grid">
+									<div class="item">
+										<div class="product-thumb">
+											<div class="image product-imageblock">
+												<a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">
+													<img data-name="product_image" src="~/Upload/Main_image/@item.MainImage" alt="Product Image" title="Product Image" class="img-responsive" style="height:208.13px">
+													<img src="~/Upload/Main_image/@item.MainImage" alt="Product Image" title="Product Image" class="img-responsive" style="height:208.13px">
+												</a>
+												<div class="button-group text-center">
+													<div class="add-to-cart"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId"><span>Add to cart</span></a></div>
+												</div>
+											</div>
+											<div class="caption product-detail text-center">
+												<div class="rating"> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-x"></i></span> </div>
+												<h4 data-name="product_name" class="product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductName</a></h4>
+												<span class="price">
+													<span class="amount">@item.FormatPrice</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							}
 
-                </div>
-              </div>
+						</div>
+					</div>
 
-            </div>
-          </div>
-          <!-- =====  PRODUCT TAB  END ===== -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="cms_banner">
-          <div class="col-xs-12 mt_60">
-            <div id="subbanner4" class="sub-hover">
-              <div class="sub-img"><a href="#"><img src="~/assets/Banner/banner5.jpg" alt="Sub Banner5" class="img-responsive" style="height:auto"></a></div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-12 mtb_10">
-          <!-- =====  PRODUCT TAB  ===== -->
-          <div class="mt_60">
-            <div class="heading-part mb_10 ">
-              <h2 class="main_title">Deals of the Week</h2>
-            </div>
-            <div class="latest_pro box">
-              <div class="latest owl-carousel">
+				</div>
+			</div>
+			<!-- =====  PRODUCT TAB  END ===== -->
+		</div>
+	</div>
+	<div class="row">
+		<div class="cms_banner">
+			<div class="col-xs-12 mt_60">
+				<div id="subbanner4" class="sub-hover">
+					<div class="sub-img"><a href="#"><img src="~/assets/Banner/banner5.jpg" alt="Sub Banner5" class="img-responsive" style="height:auto"></a></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 mtb_10">
+			<!-- =====  PRODUCT TAB  ===== -->
+			<div class="mt_60">
+				<div class="heading-part mb_10 ">
+					<h2 class="main_title">Deals of the Week</h2>
+				</div>
+				<div class="latest_pro box">
+					<div class="latest owl-carousel">
 
-              @foreach (var item in ViewBag.HotProducts)
-              {
-                 <div class="product-grid">
-                  <div class="item">
-                    <div class="product-thumb">
-                      <div class="image product-imageblock"> 
-                      <a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">
-                          <img data-name="product_image" src="~/Upload/Main_image/@item.MainImage" alt="Product Image" title="Product Image" class="img-responsive" style="height:208.13px">
-                          <img src="~/Upload/Main_image/@item.MainImage" alt="Product Image" title="Product Image" class="img-responsive" style="height:208.13px"> 
-                      </a>
-                        <div class="button-group text-center">
-                          <div class="add-to-cart"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId"><span>Add to cart</span></a></div>
-                        </div>
-                      </div>
-                      <div class="caption product-detail text-center">
-                        <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-x"></i></span> </div>
-                        <h4 data-name="product_name" class="product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductName</a></h4>
-                        <span class="price"><span class="amount">@item.FormatPrice</span>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div> 
-              }
+						@foreach (var item in ViewBag.HotProducts)
+						{
+							<div class="product-grid">
+								<div class="item">
+									<div class="product-thumb">
+										<div class="image product-imageblock">
+											<a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">
+												<img data-name="product_image" src="~/Upload/Main_image/@item.MainImage" alt="Product Image" title="Product Image" class="img-responsive" style="height:208.13px">
+												<img src="~/Upload/Main_image/@item.MainImage" alt="Product Image" title="Product Image" class="img-responsive" style="height:208.13px">
+											</a>
+											<div class="button-group text-center">
+												<div class="add-to-cart"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId"><span>Add to cart</span></a></div>
+											</div>
+										</div>
+										<div class="caption product-detail text-center">
+											<div class="rating"> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i><i class="fa fa-star fa-stack-x"></i></span> </div>
+											<h4 data-name="product_name" class="product-name"><a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductName</a></h4>
+											<span class="price">
+												<span class="amount">@item.FormatPrice</span>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
 
 
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-12 mtb_10">
-          <!-- =====  Blog ===== -->
-          
-          <!-- =====  Blog end ===== -->
-        </div>
-      </div>
-      <!-- =====  SUB BANNER END  ===== -->
-    </div>
-    <!-- =====  CONTAINER END  ===== -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 mtb_10">
+			<!-- =====  Blog ===== -->
+			<div id="Blog" class="mt_50">
+				<div class="heading-part mb_10 ">
+					<h2 class="main_title">Latest News</h2>
+				</div>
+				<div class="blog-contain box">
+					<div class="blog owl-carousel ">
+						@foreach (var item in ViewBag.Blogs)
+						{
+							<div class="item">
+								<div class="box-holder">
+									<div class="thumb post-img">
+										<a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@item.BlogId"> <img style="width:550px;height:310px;" src="~/Upload/Blog/@item.BlogImage" alt="themini"> </a>
+										<div class="post-image-hover"> </div>
+										<div class="post-info">
+											<h6 class="mb_10 text-uppercase"> <a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@item.BlogId">@item.BlogTitle</a> </h6>
+											<div class="view-blog">
+												<div class="write-comment pull-left"> </div>
+												<div class="read-more pull-right"> <a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@item.BlogId"> <i class="fa fa-link"></i> read more</a> </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+
+					</div>
+				</div>
+				<!-- =====  Blog end ===== -->
+			</div>
+			<!-- =====  Blog end ===== -->
+		</div>
+	</div>
+	<!-- =====  SUB BANNER END  ===== -->
+</div>
+<!-- =====  CONTAINER END  ===== -->

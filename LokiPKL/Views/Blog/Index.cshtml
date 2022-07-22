@@ -29,15 +29,13 @@
            {
              <div class="blog-item col-md-6 mb_30">
                 <div class="post-format">
-                  <div class="thumb post-img"><a href="single_blog.html"> <img src="images/blog/blog_img_04.jpg"  alt="themini"></a></div>
-                  <div class="post-type"><i class="fa fa-music" aria-hidden="true"></i></div>
+                  <div class="thumb post-img"><a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@item.BlogId"> <img style="width:480.5px;height:300px;" src="~/Upload/Blog/@item.BlogImage"></a></div>
                 </div>
                 <div class="post-info mtb_20 ">
-                  <h3 class="mb_10"> <a href="single_blog.html">Fashions fade, style is eternal</a> </h3>
-                  <p>Aliquam egestas pellentesque est. Etiam a orci Nulla id enim feugiat ligula ullamcorper scelerisque. Morbi eu luctus nisl.</p>
+                  <h3 class="mb_10"> <a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@item.BlogId">@item.BlogTitle</a> </h3>
                   <div class="details mtb_20">
-                    <div class="date pull-left"> <i class="fa fa-calendar" aria-hidden="true"></i>11 May 2017 </div>
-                    <div class="more pull-right"> <a asp-controller="Blog" asp-action="SingleBlog">Read more <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></div>
+                    <div class="date pull-left"> <i class="fa fa-calendar" aria-hidden="true"></i></div>
+                    <div class="more pull-right"> <a asp-controller="Blog" asp-action="SingleBlog" asp-route-id="@item.BlogId">Read more <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></div>
                   </div>
                 </div>
               </div>  

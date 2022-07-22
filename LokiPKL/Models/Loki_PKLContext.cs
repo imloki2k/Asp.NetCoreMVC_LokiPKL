@@ -49,16 +49,17 @@ namespace LokiPKL.Models
 
                 entity.Property(e => e.BlogId).HasColumnName("blog_id");
 
-                entity.Property(e => e.BlogContent)
-                    .IsRequired()
-                    .HasColumnType("text")
-                    .HasColumnName("blog_content");
+                entity.Property(e => e.BlogContent).HasColumnName("blog_content");
 
                 entity.Property(e => e.BlogImage)
                     .IsRequired()
                     .HasMaxLength(150)
                     .HasColumnName("blog_image")
                     .IsFixedLength(true);
+
+                entity.Property(e => e.BlogTitle)
+                    .HasMaxLength(500)
+                    .HasColumnName("blog_title");
             });
 
             modelBuilder.Entity<Brand>(entity =>
@@ -291,7 +292,6 @@ namespace LokiPKL.Models
             {
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
-
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(150)
@@ -309,8 +309,7 @@ namespace LokiPKL.Models
                     .IsFixedLength(true);
 
                 entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(50)
+                    .HasMaxLength(500)
                     .HasColumnName("password")
                     .IsFixedLength(true);
 

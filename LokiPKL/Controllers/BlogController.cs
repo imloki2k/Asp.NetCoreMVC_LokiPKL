@@ -32,13 +32,14 @@ namespace LokiPKL.Controllers
             return View(models);
         }
 
-        public IActionResult SingleBlog()
+        public IActionResult SingleBlog(int? id)
         {
+            var blogs = _context.Blogs.SingleOrDefault(x => x.BlogId == id);
             List<Brand> brands = _context.Brands.ToList();
             List<Category> categories = _context.Categories.ToList();
             ViewBag.Brands = brands;
             ViewBag.Categories = categories;
-            return View();
+            return View(blogs);
         }
     }
 }

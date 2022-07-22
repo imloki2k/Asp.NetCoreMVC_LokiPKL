@@ -1,9 +1,6 @@
-﻿@using PagedList.Core.Mvc
-@model PagedList.Core.IPagedList<LokiPKL.Models.Blog>
-
+﻿@model IEnumerable<LokiPKL.Models.Blog>
 
 @{
-    int CurrentPage = ViewBag.CurrentPage;
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
@@ -24,10 +21,10 @@
     <thead>
         <tr>
             <th>
-                Blog Content
+                @Html.DisplayNameFor(model => model.BlogTitle)
             </th>
             <th>
-                Blog Image
+                @Html.DisplayNameFor(model => model.BlogImage)
             </th>
             <th></th>
         </tr>
@@ -36,12 +33,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @item.BlogContent)
+                @Html.DisplayFor(modelItem => item.BlogTitle)
             </td>
             <td>
-                <img style="width:100px;height:100px" src="~/Upload/Main_image/@item.BlogImage" />
+                <img style="width:150px;height:100px" src="~/Upload/Blog/@item.BlogImage" />
             </td>
             <td>
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.BlogId">Details</a>
                 <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.BlogId">Edit</a> 
                 <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.BlogId">Delete</a>
             </td>
@@ -49,8 +47,3 @@
 }
     </tbody>
 </table>
-<div aria-label="Page navigation example">
-	<ul class="pagination">
-		<pager class="pager-container" list="@Model" asp-action="Index" asp-controller="AdminBlogs"></pager>
-	</ul>
-</div>

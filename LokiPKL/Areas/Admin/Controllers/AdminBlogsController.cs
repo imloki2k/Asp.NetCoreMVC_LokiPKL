@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LokiPKL.Models;
-using PagedList.Core;
 using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace LokiPKL.Areas.Admin.Controllers
@@ -24,17 +23,9 @@ namespace LokiPKL.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminBlogs
-        public IActionResult Index(int? page)
+        public async Task<IActionResult> Index()
         {
-            var pageNumber = page == null || page <= 0 ? 1 : page.Value;
-            var pageSize = 10;
-            var IsBlogs  = _context.Blogs.AsNoTracking()
-                .OrderByDescending(x => x.BlogId);
-
-            PagedList<Blog> models = new PagedList<Blog>(IsBlogs, pageNumber, pageSize);
-
-            ViewBag.CurrentPage = pageNumber;
-            return View(models);
+            return View(await _context.Blogs.ToListAsync());
         }
 
         // GET: Admin/AdminBlogs/Details/5
@@ -66,7 +57,7 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,BlogContent,BlogImage")] Blog blog)
+        public async Task<IActionResult> Create([Bind("BlogId,BlogContent,BlogImage,BlogTitle")] Blog blog)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +90,7 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BlogId,BlogContent,BlogImage")] Blog blog)
+        public async Task<IActionResult> Edit(int id, [Bind("BlogId,BlogContent,BlogImage,BlogTitle")] Blog blog)
         {
             if (id != blog.BlogId)
             {

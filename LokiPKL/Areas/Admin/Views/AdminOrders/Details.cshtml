@@ -42,6 +42,15 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.OrderDetails)
+        </dt>
+        <dd>
+            @foreach (var item in ViewBag.Order_Details)
+           {
+               <p>@item.Product.ProductName | @item.FormatPrice | @item.Quantity</p>
+           }
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.Note)
         </dt>
         <dd>

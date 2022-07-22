@@ -46,10 +46,16 @@ namespace LokiPKL.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            var order_details = _context.OrderDetails
+                .Include(o => o.Product)
+                .Where(x => x.OrderId == id)
+                .ToList();
+            ViewBag.Order_Details = order_details;
 
             var order = await _context.Orders
                 .Include(o => o.Status)
                 .Include(o => o.User)
+                .Include(o => o.OrderDetails)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
             if (order == null)
             {

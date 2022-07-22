@@ -10,5 +10,6 @@ namespace LokiPKL.Models
         public int BlogId { get; set; }
         public string BlogContent { get; set; }
         public string BlogImage { get; set; }
+        public string BlogTitle { get; set; }
     }
 }
