@@ -1,0 +1,88 @@
+﻿@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+	<div class="row ">
+		<!-- =====  BANNER STRAT  ===== -->
+		<div class="col-sm-12">
+			<div class="breadcrumb ptb_20">
+				<h1>Shopping Cart</h1>
+				<ul>
+					<li><a asp-controller="Home" asp-action="Index">Home</a></li>
+					<li class="active">Shopping Cart</li>
+				</ul>
+			</div>
+		</div>
+		<!-- =====  BREADCRUMB END===== -->
+		@await Html.PartialAsync("_CategoryLeftPartialView")
+
+		@if (ViewBag.IsGioHang != null && ViewBag.IsGioHang.Count > 0)
+		{
+			<div class="col-sm-8 col-lg-9 mtb_20">
+					<div class="table-responsive">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<td class="text-center">Image</td>
+									<td class="text-left">Product Name</td>
+									<td class="text-left">Quantity</td>
+									<td class="text-right">Unit Price</td>
+									<td class="text-right">Total</td>
+								</tr>
+							</thead>
+							<tbody>
+								@if (ViewBag.IsGioHang != null && ViewBag.IsGioHang.Count > 0)
+								{
+									@foreach (var item in ViewBag.IsGioHang)
+									{
+										<tr>
+											<td class="text-center"><a href="#"><img style="width:180px;height:150px" src="~/Upload/Main_image/@item.product.MainImage"></a></td>
+											<td class="text-left">@item.product.ProductName</td>
+											<td class="text-left">
+												<div style="max-width: 200px;" class="input-group btn-block">
+													<form asp-controller="ShoppingCart" asp-action="Update">
+														<input type="hidden" name="productID" value="@item.product.ProductId"/>
+														<input type="number" class="form-control quantity" min="1" max="10" size="10" value="@item.amount" name="amount" style="width:100px">
+														<div>
+														<input type="submit" value="Update" style="width:80px">
+														<span>
+														<a asp-controller="ShoppingCart" asp-action="Remove" asp-route-productID="@item.product.ProductId">
+															<i class="fa fa-times-circle"></i>
+														</a>
+														</span>
+														</div>
+													</form>
+
+												</div>
+											</td>
+											<td class="text-right">@item.product.FormatPrice</td>
+											<td class="text-right">@item.FormatTotalPrice</td>
+										</tr>
+									}
+								}
+							</tbody>
+						</table>
+					</div>
+				<div class="panel-group mt_20" id="accordion">
+					
+				</div>
+				<form asp-controller="Product" asp-action="Index">
+					<input class="btn pull-left mt_30" type="submit" value="Continue Shopping" />
+				</form>
+				<form asp-controller="ShoppingCart" asp-action="CheckOut">
+					<input class="btn pull-right mt_30" type="submit" value="Checkout" />
+				</form>
+			</div>
+		}
+		else
+		{
+			<div>
+				<h3 class="text-center">Nothing in Shopping Cart</h3>
+			</div>
+		}
+	</div>
+</div>
+	</div>
+

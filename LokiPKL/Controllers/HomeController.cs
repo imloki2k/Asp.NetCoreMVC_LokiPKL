@@ -1,5 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using LokiPKL.Extensions;
 using LokiPKL.Models;
+using LokiPKL.ModelViews;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -25,6 +27,18 @@ namespace LokiPKL.Controllers
             _notifyService = notifyService;
         }
 
+        public List<CartItem> GioHang
+        {
+            get
+            {
+                var gh = HttpContext.Session.Get<List<CartItem>>("GioHang");
+                if (gh == default(List<CartItem>))
+                {
+                    gh = new List<CartItem>();
+                }
+                return gh;
+            }
+        }
         public IActionResult Index()
         {
             List<Blog> blogs = _context.Blogs.OrderByDescending(x => x.BlogId).ToList();
@@ -37,6 +51,8 @@ namespace LokiPKL.Controllers
             ViewBag.HotProducts = hot_products;
             ViewBag.FeaturedProducts = featured_products;
             ViewBag.Blogs = blogs;
+            var IsGioHang = GioHang;
+            ViewBag.IsGioHang = IsGioHang;
             return View();
         }
 
@@ -47,6 +63,8 @@ namespace LokiPKL.Controllers
 
         public IActionResult Contact()
         {
+            var IsGioHang = GioHang;
+            ViewBag.IsGioHang = IsGioHang;
             List<Brand> brands = _context.Brands.ToList();
             List<Category> categories = _context.Categories.ToList();
             ViewBag.Brands = brands;
@@ -69,6 +87,8 @@ namespace LokiPKL.Controllers
 
         public IActionResult About()
         {
+            var IsGioHang = GioHang;
+            ViewBag.IsGioHang = IsGioHang;
             List<Brand> brands = _context.Brands.ToList();
             List<Category> categories = _context.Categories.ToList();
             ViewBag.Brands = brands;

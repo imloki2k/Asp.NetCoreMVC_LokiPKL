@@ -20,8 +20,8 @@
 							{
 								<li>
 									<a asp-area="Admin" asp-controller="Home" asp-action="Index">
-									<i class="fa-light fa-square-up-right"></i><span>Go To Admin Dashboard</span>
-								    </a>
+										<span>Go To Admin Dashboard</span>
+									</a>
 								</li>
 								<li>
 									<a href="/Logout.html">Log out</a>
@@ -71,65 +71,62 @@
 				<div class="navbar-header col-xs-6 col-sm-4"> <a class="navbar-brand" href="index.html"> <img alt="themini" src="~/assets/images/logo.png"> </a> </div>
 				<div class="col-xs-6 col-sm-4 shopcart">
 					<div id="cart" class="btn-group btn-block mtb_40">
-						<button type="button" class="btn" data-target="#cart-dropdown" data-toggle="collapse" aria-expanded="true"><span id="shippingcart">Shopping cart</span><span id="cart-total">items (0)</span> </button>
+						<button type="button" class="btn" data-target="#cart-dropdown" data-toggle="collapse" aria-expanded="true">
+							<span id="shippingcart">Shopping cart</span>
+							<span id="cart-total">
+								items (
+								@if (ViewBag.IsGioHang != null && ViewBag.IsGioHang.Count > 0)
+								{
+									<span>@ViewBag.IsGioHang.Count</span>
+								}
+								else
+								{
+									<span>0</span>
+								}
+								)
+							</span>
+						</button>
 					</div>
+
 					<div id="cart-dropdown" class="cart-menu collapse">
-						<ul>
-							<li>
-								<table class="table table-striped">
-									<tbody>
-										<tr>
-											<td class="text-center"><a href="#"><img src="~/assets/images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a></td>
-											<td class="text-left product-name">
-												<a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
-												<input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-											</td>
-											<td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
-										</tr>
-										<tr>
-											<td class="text-center"><a href="#"><img src="~/assets/images/product/70x84.jpg" alt="iPod Classic" title="iPod Classic"></a></td>
-											<td class="text-left product-name">
-												<a href="#">MacBook Pro</a> <span class="text-left price">$20.00</span>
-												<input class="cart-qty" name="product_quantity" min="1" value="1" type="number">
-											</td>
-											<td class="text-center"><a class="close-cart"><i class="fa fa-times-circle"></i></a></td>
-										</tr>
-									</tbody>
-								</table>
-							</li>
-							<li>
-
-								<table class="table">
-									<tbody>
-										<tr>
-											<td class="text-right"><strong>Sub-Total</strong></td>
-											<td class="text-right">$2,100.00</td>
-										</tr>
-										<tr>
-											<td class="text-right"><strong>Eco Tax (-2.00)</strong></td>
-											<td class="text-right">$2.00</td>
-										</tr>
-										<tr>
-											<td class="text-right"><strong>VAT (20%)</strong></td>
-											<td class="text-right">$20.00</td>
-										</tr>
-										<tr>
-											<td class="text-right"><strong>Total</strong></td>
-											<td class="text-right">$2,122.00</td>
-										</tr>
-									</tbody>
-								</table>
-
-							</li>
-							<li>
-								<form action="cart_page.html">
-									<input class="btn pull-left mt_10" value="View cart" type="submit">
-								</form>
-								<form action="checkout_page.html">
-									<input class="btn pull-right mt_10" value="Checkout" type="submit">
-								</form>
-							</li>
-						</ul>
+						@if (ViewBag.IsGioHang != null && ViewBag.IsGioHang.Count > 0)
+						{
+							<ul>
+								<li>
+									<table class="table table-striped">
+										<tbody>
+											@foreach (var item in ViewBag.IsGioHang)
+											{
+												<tr>
+													<td class="text-center"><img src="~/Upload/Main_image/@item.product.MainImage"></td>
+													<td class="text-left product-name">
+														<a asp-controller="Product" asp-action="Details" asp-route-id="@item.product.ProductId">@item.product.ProductName</a> 
+														<span class="text-left price">UnitPrice: @item.product.FormatPrice</span>
+														<div>Quantity: @item.amount</div>
+														<div>Total Price: @item.FormatTotalPrice</div>
+													</td>
+													<td class="text-center"><a asp-controller="ShoppingCart" asp-action="Remove" asp-route-productID="@item.product.ProductId" class="close-cart"><i class="fa fa-times-circle"></i></a></td>
+												</tr>
+											}
+										</tbody>
+									</table>
+								</li>
+								<li>
+									<form asp-controller="ShoppingCart" asp-action="Index">
+										<input class="btn pull-left mt_10" value="View cart" type="submit">
+									</form>
+									<form action="checkout_page.html">
+										<input class="btn pull-right mt_10" value="Checkout" type="submit">
+									</form>
+								</li>
+							</ul>
+						}
+						else
+						{
+							<div class="text-center">
+								<p>Nothing in shopping cart</p>
+							</div>
+						}
 					</div>
 				</div>
 			</div>

@@ -1,4 +1,6 @@
-﻿using LokiPKL.Models;
+﻿using LokiPKL.Extensions;
+using LokiPKL.Models;
+using LokiPKL.ModelViews;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PagedList.Core;
@@ -16,6 +18,19 @@ namespace LokiPKL.Controllers
             _context = context;
         }
 
+        public List<CartItem> GioHang
+        {
+            get
+            {
+                var gh = HttpContext.Session.Get<List<CartItem>>("GioHang");
+                if (gh == default(List<CartItem>))
+                {
+                    gh = new List<CartItem>();
+                }
+                return gh;
+            }
+        }
+
         public IActionResult Index(int? page, int id, string search)
         {
             var pageNumber = page == null || page <= 0 ? 1 : page.Value;
@@ -29,6 +44,8 @@ namespace LokiPKL.Controllers
                 PagedList<Product> models = new PagedList<Product>(IsProducts, pageNumber, pageSize);
                 ViewBag.CurrentPage = pageNumber;
 
+                var IsGioHang = GioHang;
+                ViewBag.IsGioHang = IsGioHang;
                 List<Brand> brands = _context.Brands.ToList();
                 List<Category> categories = _context.Categories.ToList();
                 ViewBag.Brands = brands;
@@ -42,6 +59,8 @@ namespace LokiPKL.Controllers
                 PagedList<Product> models = new PagedList<Product>(IsProducts, pageNumber, pageSize);
                 ViewBag.CurrentPage = pageNumber;
 
+                var IsGioHang = GioHang;
+                ViewBag.IsGioHang = IsGioHang;
                 List<Brand> brands = _context.Brands.ToList();
                 List<Category> categories = _context.Categories.ToList();
                 ViewBag.Brands = brands;
@@ -56,6 +75,8 @@ namespace LokiPKL.Controllers
                 PagedList<Product> models = new PagedList<Product>(IsProducts, pageNumber, pageSize);
                 ViewBag.CurrentPage = pageNumber;
 
+                var IsGioHang = GioHang;
+                ViewBag.IsGioHang = IsGioHang;
                 List<Brand> brands = _context.Brands.ToList();
                 List<Category> categories = _context.Categories.ToList();
                 ViewBag.Brands = brands;
@@ -75,6 +96,8 @@ namespace LokiPKL.Controllers
             {
                 return NotFound();
             }
+            var IsGioHang = GioHang;
+            ViewBag.IsGioHang = IsGioHang;
             List<Brand> brands = _context.Brands.ToList();
             List<Category> categories = _context.Categories.ToList();
             ViewBag.Brands = brands;

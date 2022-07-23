@@ -28,6 +28,19 @@ namespace LokiPKL.Controllers
             _notifyService = notifyService;
         }
 
+        public List<CartItem> GioHang
+        {
+            get
+            {
+                var gh = HttpContext.Session.Get<List<CartItem>>("GioHang");
+                if (gh == default(List<CartItem>))
+                {
+                    gh = new List<CartItem>();
+                }
+                return gh;
+            }
+        }
+
         public static bool isEmail(string inputEmail)
         {
             inputEmail = inputEmail ?? string.Empty;
@@ -68,6 +81,9 @@ namespace LokiPKL.Controllers
             {
                 return RedirectToAction("Dashboard","Accounts");
             }
+
+            var IsGioHang = GioHang;
+            ViewBag.IsGioHang = IsGioHang;
             List<Brand> brands = _context.Brands.ToList();
             List<Category> categories = _context.Categories.ToList();
             ViewBag.Brands = brands;
@@ -107,6 +123,7 @@ namespace LokiPKL.Controllers
                             ClaimsIdentity identity = new ClaimsIdentity(claims, "login");
                             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                             await HttpContext.SignInAsync(principal);
+                            HttpContext.Session.Set<List<CartItem>>("GioHang", null);
                             return RedirectToAction("Index", "Home");
                         }
                         else
@@ -143,6 +160,8 @@ namespace LokiPKL.Controllers
         [Route("Register.html", Name = "Register")]
         public IActionResult Register()
         {
+            var IsGioHang = GioHang;
+            ViewBag.IsGioHang = IsGioHang;
             List<Brand> brands = _context.Brands.ToList();
             List<Category> categories = _context.Categories.ToList();
             ViewBag.Brands = brands;
@@ -208,6 +227,7 @@ namespace LokiPKL.Controllers
                         ClaimsIdentity identity = new ClaimsIdentity(claims, "login");
                         ClaimsPrincipal principal = new ClaimsPrincipal(identity);
                         await HttpContext.SignInAsync(principal);
+                        HttpContext.Session.Set<List<CartItem>>("GioHang", null);
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -248,6 +268,8 @@ namespace LokiPKL.Controllers
                 var customer = _context.Users.AsNoTracking().SingleOrDefault(x => x.UserId == Convert.ToInt32(tkID));
                 if(customer != null)
                 {
+                    var IsGioHang = GioHang;
+                    ViewBag.IsGioHang = IsGioHang;
                     List<Brand> brands = _context.Brands.ToList();
                     List<Category> categories = _context.Categories.ToList();
                     ViewBag.Brands = brands;
