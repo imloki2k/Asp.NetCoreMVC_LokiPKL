@@ -25,10 +25,28 @@ namespace LokiPKL.Areas.Admin.Controllers
         }
 
         // GET: Admin/AdminCategories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int search)
         {
             var loki_PKLContext = _context.Categories.Include(c => c.Brand);
-            return View(await loki_PKLContext.ToListAsync());
+            var brands = _context.Brands.ToList();
+            ViewBag.Brands = brands;
+            if(search == 0)
+            {
+                var categories = _context.Categories
+                                .Include(c => c.Brand)
+                                .ToList();
+                ViewBag.CurBrand = search;
+                return View(categories);
+            }
+            else
+            {
+                var categories = _context.Categories
+                .Include(c => c.Brand)
+                .Where(x => x.BrandId == search)
+                .ToList();
+                ViewBag.CurBrand = search;
+                return View(categories);
+            }
         }
 
         // GET: Admin/AdminCategories/Details/5

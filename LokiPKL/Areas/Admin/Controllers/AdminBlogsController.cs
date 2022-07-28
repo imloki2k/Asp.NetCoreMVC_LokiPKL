@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LokiPKL.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using LokiPKL.Helpper;
 
 namespace LokiPKL.Areas.Admin.Controllers
 {
@@ -59,10 +60,15 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BlogId,BlogContent,BlogImage,BlogTitle")] Blog blog)
+        public async Task<IActionResult> Create([Bind("BlogId,BlogContent,BlogImage,BlogTitle")] Blog blog, Microsoft.AspNetCore.Http.IFormFile fBlogImage)
         {
             if (ModelState.IsValid)
             {
+                if (fBlogImage != null)
+                {
+                    blog.BlogImage = await Utilities.UploadFile(fBlogImage, @"Blog", fBlogImage.FileName.ToLower());
+                }
+                if (string.IsNullOrEmpty(blog.BlogImage)) blog.BlogImage = "default.jpg";
                 _context.Add(blog);
                 await _context.SaveChangesAsync();
                 _notifyService.Success("Add new Blog successful!");
@@ -92,7 +98,7 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BlogId,BlogContent,BlogImage,BlogTitle")] Blog blog)
+        public async Task<IActionResult> Edit(int id, [Bind("BlogId,BlogContent,BlogImage,BlogTitle")] Blog blog, Microsoft.AspNetCore.Http.IFormFile fBlogImage)
         {
             if (id != blog.BlogId)
             {
@@ -103,6 +109,11 @@ namespace LokiPKL.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (fBlogImage != null)
+                    {
+                        blog.BlogImage = await Utilities.UploadFile(fBlogImage, @"Blog", fBlogImage.FileName.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(blog.BlogImage)) blog.BlogImage = "default.jpg";
                     _context.Update(blog);
                     await _context.SaveChangesAsync();
                     _notifyService.Success("Edit successful!");

@@ -7,9 +7,9 @@ namespace LokiPKL.ModelViews
         public Product product { get; set; }
         public int amount { get; set; }
 
-        public double TotalPrice => amount * product.Price;
+        public uint TotalPrice => (uint)(amount * product.Price);
 
-        public string FormatTotalPrice => this.TotalPrice.ToString("#,##0.00 VNĐ");
+        public string FormatTotalPrice => this.TotalPrice.ToString("#,##.00 VNĐ");
 
     }
 }

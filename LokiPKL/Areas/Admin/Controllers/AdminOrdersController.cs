@@ -33,7 +33,7 @@ namespace LokiPKL.Areas.Admin.Controllers
             var pageSize = 10;
             var IsOrders = _context.Orders.AsNoTracking()
                 .Include(o => o.Status)
-                .OrderBy(x => x.OrderDate);
+                .OrderByDescending(x => x.OrderDate);
 
             PagedList<Order> models = new PagedList<Order>(IsOrders, pageNumber, pageSize);
 

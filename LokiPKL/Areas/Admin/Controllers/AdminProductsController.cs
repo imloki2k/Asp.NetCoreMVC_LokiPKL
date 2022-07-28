@@ -9,6 +9,8 @@ using LokiPKL.Models;
 using PagedList.Core;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
+using LokiPKL.Helpper;
 
 namespace LokiPKL.Areas.Admin.Controllers
 {
@@ -73,10 +75,15 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,Price,Quantity,Description,MainImage,HotProduct,FeaturedProduct")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,Price,Quantity,Description,MainImage,HotProduct,FeaturedProduct")] Product product,Microsoft.AspNetCore.Http.IFormFile fMainImage)
         {
             if (ModelState.IsValid)
             {
+                if(fMainImage != null)
+                {
+                    product.MainImage = await Utilities.UploadFile(fMainImage, @"Main_image", fMainImage.FileName.ToLower());
+                }
+                if (string.IsNullOrEmpty(product.MainImage)) product.MainImage = "default.jpg";
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 _notifyService.Success("Add new Product successful!");
@@ -110,7 +117,7 @@ namespace LokiPKL.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,BrandId,CategoryId,Price,Quantity,Description,MainImage,HotProduct,FeaturedProduct")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,BrandId,CategoryId,Price,Quantity,Description,MainImage,HotProduct,FeaturedProduct")] Product product, Microsoft.AspNetCore.Http.IFormFile fMainImage)
         {
             if (id != product.ProductId)
             {
@@ -121,6 +128,11 @@ namespace LokiPKL.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (fMainImage != null)
+                    {
+                        product.MainImage = await Utilities.UploadFile(fMainImage, @"Main_image", fMainImage.FileName.ToLower());
+                    }
+                    if (string.IsNullOrEmpty(product.MainImage)) product.MainImage = "default.jpg";
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                     _notifyService.Success("Edit successful!");

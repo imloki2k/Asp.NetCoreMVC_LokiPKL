@@ -283,7 +283,7 @@ namespace LokiPKL.Controllers
         }
 
 
-        public IActionResult ChangePassword(string OldPassword, string NewPassword)
+        public IActionResult ChangePassword(string OldPassword, string NewPassword,string ConfirmPassword)
         {
             var uID = HttpContext.Session.GetString("UserId");
             var user = _context.Users.AsNoTracking().SingleOrDefault(u => u.UserId == Convert.ToInt32(uID));
@@ -293,6 +293,11 @@ namespace LokiPKL.Controllers
                 if (NewPassword.Length < 6)
                 {
                     _notifyService.Error("NewPassword must more than 6 digits ơr letters");
+                    RedirectToAction("Dashboard", "Accounts");
+                }
+                else if(ConfirmPassword != NewPassword)
+                {
+                    _notifyService.Error("Confirm new password wrong");
                     RedirectToAction("Dashboard", "Accounts");
                 }
                 else

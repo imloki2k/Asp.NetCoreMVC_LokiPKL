@@ -24,11 +24,11 @@
 				<div class="nav-responsive">
 					<br />
 					<div class="heading-part" style="background-color:#424242;">
-						<a asp-controller="Product" asp-action="Index" asp-route-id="0" >
-							<h3>ALL PRODUCTS</h3>
-						</a>	
+							<h3>CATEGORIES</h3>
 					</div>
-					<div><br /></div>
+					<ul class="nav  main-navigation collapse in">
+						<li class="category_"><a asp-controller="Product" asp-action="Index" asp-route-id="0">All Products</a></li>
+					</ul>
 					@foreach (var b in ViewBag.Brands)
 					{
 						<div class="heading-part" style="background-color:#424242;">

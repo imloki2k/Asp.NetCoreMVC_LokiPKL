@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace LokiPKL.Controllers
 {
@@ -18,6 +19,36 @@ namespace LokiPKL.Controllers
         {
             _context = context;
             _notifyService = notifyService;
+        }
+
+        public static bool isEmail(string inputEmail)
+        {
+            inputEmail = inputEmail ?? string.Empty;
+            string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+                  @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+                  @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+            Regex re = new Regex(strRegex);
+            if (re.IsMatch(inputEmail))
+                return (true);
+            else
+                return (false);
+        }
+
+
+        public bool IsValidPhone(string Phone)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Phone))
+                    return false;
+                var r = new Regex(@"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$");
+                return r.IsMatch(Phone);
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
 
@@ -119,12 +150,12 @@ namespace LokiPKL.Controllers
         public IActionResult CheckOut()
         {
             List<CartItem> gioHang = GioHang;
-            double SumTotal = 0;
+            uint SumTotal = 0;
             foreach(var item in gioHang)
             {
                 SumTotal += item.TotalPrice;
             }
-            ViewBag.SumTotal = SumTotal;    
+            ViewBag.SumTotal = (uint)SumTotal;    
 
             List<int> IsProductIDs = new List<int>();
             var IsGioHang = GioHang;
@@ -140,33 +171,53 @@ namespace LokiPKL.Controllers
 
         public IActionResult DoOrder(string name,string address, string phoneNumber, string email,string note)
 		{
-            List<CartItem> gioHang = GioHang;
-            Order order = new Order
-			{
-                CustomerName = name,
-                OrderDate = DateTime.Now,
-                StatusId = 4,
-                Address = address,
-                PhoneNumber = phoneNumber,
-                Email = email,
-                Note = note,
-			};
-            _context.Orders.Add(order);
-            _context.SaveChanges();
-            foreach(var item in gioHang)
-			{
-                OrderDetail detail = new OrderDetail
+            if(name != null && address != null && phoneNumber != null && email != null)
+            {
+                if (!isEmail(email))
                 {
-                    OrderId = order.OrderId,
-                    ProductId = item.product.ProductId,
-                    Quantity = item.amount,
-                    Price = (int)item.TotalPrice
-                };
-                _context.OrderDetails.Add(detail);
-                _context.SaveChanges();
-			}
-            HttpContext.Session.Set<List<CartItem>>("GioHang", null);
-            _notifyService.Success("Order success");
+                    _notifyService.Error("Email wrong form");
+                    return RedirectToAction("CheckOut", "ShoppingCart");
+                }else if (IsValidPhone(phoneNumber))
+                {
+                    _notifyService.Error("PhoneNumber must be 10 digit");
+                    return RedirectToAction("CheckOut", "ShoppingCart");
+                }
+                else
+                {
+                    List<CartItem> gioHang = GioHang;
+                    Order order = new Order
+                    {
+                        CustomerName = name,
+                        OrderDate = DateTime.Now,
+                        StatusId = 4,
+                        Address = address,
+                        PhoneNumber = phoneNumber,
+                        Email = email,
+                        Note = note,
+                    };
+                    _context.Orders.Add(order);
+                    _context.SaveChanges();
+                    foreach (var item in gioHang)
+                    {
+                        OrderDetail detail = new OrderDetail
+                        {
+                            OrderId = order.OrderId,
+                            ProductId = item.product.ProductId,
+                            Quantity = item.amount,
+                            Price = (int)item.TotalPrice
+                        };
+                        _context.OrderDetails.Add(detail);
+                        _context.SaveChanges();
+                    }
+                    HttpContext.Session.Set<List<CartItem>>("GioHang", null);
+                    _notifyService.Success("Order success");
+                }
+            }
+            else
+            {
+                _notifyService.Error("Please enter full your information");
+                return RedirectToAction("CheckOut", "ShoppingCart");
+            }
 
             List<int> IsProductIDs = new List<int>();
             var IsGioHang = GioHang;
@@ -175,7 +226,7 @@ namespace LokiPKL.Controllers
             List<Category> categories = _context.Categories.ToList();
             ViewBag.Brands = brands;
             ViewBag.Categories = categories;
-            return RedirectToAction("Index","ShoppingCart");
+            return RedirectToAction("CheckOut", "ShoppingCart");
 		}
     }
 }
